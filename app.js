@@ -8,10 +8,10 @@ const path = require('path');
 
 const app = express();
 
-const dbURI = 'mongodb+srv://teacher1:teacherpass@pangolincluster.4zlie5n.mongodb.net/PangolinDB?retryWrites=true&w=majority';
+const dbURI = 'mongodb+srv://PangolinPal:Pangolin_Pal_1@cluster0.i4h9m9n.mongodb.net/pangolin_data?retryWrites=true&w=majority';
 mongoose.connect(dbURI)
-    .then((result) => app.listen(3001))
-    .catch((err) => console.log(err));
+  .then(() => app.listen(3000))
+  .catch((err) => console.log(err));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -19,32 +19,26 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const courses = [
-    {
-        title: 'Scales 101', 
-        description: 'Learn how to maintain your scales for peak shininess.',
-        subject: 'Health',
-        credits: '2'
-    },
-    {
-        title: 'Effective Insect Hunting', 
-        description: 'How to find the best insects to eat, and fast!',
-        subject: 'Nutrition',
-        credits: '1.5'
-    },
-    {
-        title: 'Pangolin Taxonomy', 
-        description: 'Learn about the taxonomy and history of the Pangolin species.',
-        subject: 'History',
-        credits: '3'
-    },
-    {
-        title: 'Pangolinish 203', 
-        description: 'Advanced study of the Pangolish language and literature.',
-        subject: 'Pangolinish Studies',
-        credits: '2'
-    },
-]
+  app.get('/add-course', (req, res) => {
+    const course = new Course({
+      title: 'Pangolinish 203',
+      instructor: 'Prof. Perry',
+      description: 'Advanced study of the Pangolish language and literature.',
+      schedule: '9am-10:30am MT',
+      campus: 'Indianapolis',
+      subject: 'Pangolinish Studies',
+      credits: '2'
+    });
+
+    course.save()
+      .then((result) => {
+        res.send('Course added successfully'); 
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send('Error adding course'); 
+      });
+  });
 
 // Display the faculty page with courses
 app.get('/faculty', (req, res) => {
@@ -140,23 +134,38 @@ app.get('/', (req, res) => {
     res.render('index', { title: 'Home'}); 
 });
 
-app.get('/courses', (req, res) => {
-    res.render('course_page', { title: 'Courses', courses });
-});
+  app.get('/courses', (req, res) => {
+    Course.find()
+      .then((result) => {
+        res.render('course_page', { title: 'Courses', courses: result });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  })
 
-app.get('/singleCourse', (req, res) => {
-    res.render('singleCourse', { title: 'Courses'});
-});
+  app.post('/courses', (req, res) => {
+    const course = new Course(req.body);
 
-app.get('/faculty', (req, res) => {
-    res.render('faculty', { title: 'Faculty Home Page' });
-});
+    course.save()
+      .then((result) => {
+        res.redirect('/courses')
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  })
+  app.get('/staff', (req, res) => {
+    Course.find()
+      .then((result) => {
+        res.render('create', { title: 'Staff', courses: result });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  })
 
-app.get('/students', (req, res) => {
-    res.render('students', { title: 'Student Home Page' });
-});
-
-app.get('/login', (req, res) => {
+  app.get('/login', (req, res) => {
     res.render('login', { title: 'Sign In' });
 });
 
