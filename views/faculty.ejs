@@ -7,7 +7,26 @@
         <h2>Welcome Faculty!</h2>
         <br>
         <h3>Edit Courses</h3>
-        
+        <form action="/submit" method="post">
+          <label for="courseID">Course ID:</label><br>
+          <input type="text" id="courseID" name="courseID">
+          <input type="submit" value="Edit"><br><br>
+          <input type="submit" value="Create New">
+          <input type="submit" value="Delete">
+          <input type="submit" value="Clear Form">
+          <br>
+          <label for="courseName">Name:</label><br>
+          <input type="text" id="courseName" name="courseName"><br>
+          <label for="description">Description:</label><br>
+          <input type="textarea" id="description" name="description"><br>
+          <label for="subject">Subject:</label><br>
+          <input type="text" id="subject" name="subject"><br>
+          <label for="credits">Credits:</label><br>
+          <input type="number" id="credits" name="credits"><br>
+          <label for="created_by">Created By:</label><br>
+          <input type="text" id="created_by" name="created_by"><br>
+          <input type="submit" value="Save">
+      </form>
 
     
       </div>
