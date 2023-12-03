@@ -10,7 +10,7 @@ const app = express();
 
 const dbURI = 'mongodb+srv://teacher1:teacherpass@pangolincluster.4zlie5n.mongodb.net/PangolinDB?retryWrites=true&w=majority';
 mongoose.connect(dbURI)
-    .then((result) => app.listen(3000))
+    .then((result) => app.listen(3001))
     .catch((err) => console.log(err));
 
 app.set('view engine', 'ejs');
@@ -19,32 +19,32 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// const courses = [
-//     {
-//         title: 'Scales 101', 
-//         description: 'Learn how to maintain your scales for peak shininess.',
-//         subject: 'Health',
-//         credits: '2'
-//     },
-//     {
-//         title: 'Effective Insect Hunting', 
-//         description: 'How to find the best insects to eat, and fast!',
-//         subject: 'Nutrition',
-//         credits: '1.5'
-//     },
-//     {
-//         title: 'Pangolin Taxonomy', 
-//         description: 'Learn about the taxonomy and history of the Pangolin species.',
-//         subject: 'History',
-//         credits: '3'
-//     },
-//     {
-//         title: 'Pangolinish 203', 
-//         description: 'Advanced study of the Pangolish language and literature.',
-//         subject: 'Pangolinish Studies',
-//         credits: '2'
-//     },
-// ]
+const courses = [
+    {
+        title: 'Scales 101', 
+        description: 'Learn how to maintain your scales for peak shininess.',
+        subject: 'Health',
+        credits: '2'
+    },
+    {
+        title: 'Effective Insect Hunting', 
+        description: 'How to find the best insects to eat, and fast!',
+        subject: 'Nutrition',
+        credits: '1.5'
+    },
+    {
+        title: 'Pangolin Taxonomy', 
+        description: 'Learn about the taxonomy and history of the Pangolin species.',
+        subject: 'History',
+        credits: '3'
+    },
+    {
+        title: 'Pangolinish 203', 
+        description: 'Advanced study of the Pangolish language and literature.',
+        subject: 'Pangolinish Studies',
+        credits: '2'
+    },
+]
 
 // Display the faculty page with courses
 app.get('/faculty', (req, res) => {
