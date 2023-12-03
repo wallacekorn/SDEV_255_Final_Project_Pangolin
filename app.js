@@ -39,12 +39,26 @@ app.get('/', (req, res) => {
     res.render('index', { title: 'Home'}); 
 });
 
-
 app.get('/courses', (req, res) => {
     res.render('course_page', { title: 'Courses', courses });
 });
 
+app.get('/singleCourse', (req, res) => {
+    res.render('singleCourse', { title: 'Courses'});
+});
+
+app.get('/staff', (req, res) => {
+    res.render('staff', { title: 'Staff' });
+});
+
+app.get('/students', (req, res) => {
+    res.render('students', { title: 'Students' });
+});
+
+app.get('/login', (req, res) => {
+    res.render('login', { title: 'Sign In' });
+});
 
 app.use((req, res) => {
-    res.status(404).render('404', { title: '404' });
+    res.status(404).render('404', { title: '404: Page Not Found' });
 });
