@@ -47,12 +47,12 @@ app.get('/singleCourse', (req, res) => {
     res.render('singleCourse', { title: 'Courses'});
 });
 
-app.get('/staff', (req, res) => {
-    res.render('staff', { title: 'Staff' });
+app.get('/faculty', (req, res) => {
+    res.render('faculty', { title: 'Faculty Home Page' });
 });
 
 app.get('/students', (req, res) => {
-    res.render('students', { title: 'Students' });
+    res.render('students', { title: 'Student Home Page' });
 });
 
 app.get('/login', (req, res) => {
