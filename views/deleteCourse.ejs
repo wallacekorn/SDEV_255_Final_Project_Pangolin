@@ -1,4 +1,5 @@
 <!-- deleteCourse.ejs -->
+
 <html lang="en">
 <%- include('./partials/head.ejs') %>
 <body>
@@ -9,17 +10,17 @@
 
         <!-- Display course details and confirmation message -->
         <div>
-          <strong><%= course.title %></strong><br>
-          <%= course.description %><br>
-          Subject: <%= course.subject %><br>
-          Credits: <%= course.credits %>
+            <strong><%= course.title %></strong><br>
+            <%= course.description %><br>
+            Subject: <%= course.subject %><br>
+            Credits: <%= course.credits %>
         </div>
 
         <form action="/faculty/delete/<%= course.title %>" method="POST">
-          <p>Are you sure you want to delete this course?</p>
-          <button type="submit">Yes, Delete Course</button>
+            <p>Are you sure you want to delete this course?</p>
+            <button type="submit">Yes, Delete Course</button>
         </form>
     </div>
-  <%- include('./partials/footer.ejs') %>
+    <%- include('./partials/footer.ejs') %>
 </body>
 </html>
