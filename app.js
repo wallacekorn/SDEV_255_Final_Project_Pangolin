@@ -1,12 +1,32 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const Instructor = require('./models/instructor');
+const Student = require('./models/student');
+const Course = require('./models/course');
 
 const app = express();
 
+const dbURI = 'mongodb+srv://teacher1:teacherpass@pangolincluster.4zlie5n.mongodb.net/PangolinDB?retryWrites=true&w=majority';
+mongoose.connect(dbURI)
+    .then((result) => app.listen(3000))
+    .catch((err) => console.log(err));
+
 app.set('view engine', 'ejs');
 
-app.listen(3000);
-
 app.use(express.static('public'));
+
+//mongoose and mongo routes
+// app.get('/add-student', (req,res) => {
+//     const student = new Student({}
+//         name: ''
+
+//     })
+// })
+
+
+
+
+
 
 const courses = [
     {
