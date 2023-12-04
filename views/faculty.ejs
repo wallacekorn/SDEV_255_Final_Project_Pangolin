@@ -2,32 +2,34 @@
 <%- include('./partials/head.ejs') %>
 <body>
     <%- include('./partials/nav.ejs') %> 
-        <!-- Display courses here -->
-        <div class="courses">
-          <h2>Welcome Faculty!</h2>
+
+    <div class="courses">
+        <h2>Welcome Faculty!</h2>
+        <br>
+        <h3>Edit Courses</h3>
+        <form action="/submit" method="post">
+          <label for="courseID">Course ID:</label><br>
+          <input type="text" id="courseID" name="courseID">
+          <input type="submit" value="Edit"><br><br>
+          <input type="submit" value="Create New">
+          <input type="submit" value="Delete">
+          <input type="submit" value="Clear Form">
           <br>
-          <h3>Edit Courses</h3>
-      
-          <!-- Display courses here -->
-          <% courses.forEach(course => { %>
-              <div>
-                  <strong><%= course.title %></strong><br>
-                  <%= course.description %><br>
-                  Subject: <%= course.subject %><br>
-                  Credits: <%= course.credits %>
-                  <div class="course-actions">
-                      <a href="/faculty/edit/<%= course.title %>">Edit</a>
-                      <a href="/faculty/delete/<%= course.title %>">Delete</a>
-                  </div>
-              </div>
-              <hr>
-          <% }); %>
-      
-          <!-- Add a link to the "Add Course" page -->
-          <a href="/faculty/add-course">Add Course</a>
-      </div>
+          <label for="courseName">Name:</label><br>
+          <input type="text" id="courseName" name="courseName"><br>
+          <label for="description">Description:</label><br>
+          <input type="textarea" id="description" name="description"><br>
+          <label for="subject">Subject:</label><br>
+          <input type="text" id="subject" name="subject"><br>
+          <label for="credits">Credits:</label><br>
+          <input type="number" id="credits" name="credits"><br>
+          <label for="created_by">Created By:</label><br>
+          <input type="text" id="created_by" name="created_by"><br>
+          <input type="submit" value="Save">
+      </form>
+
     
-    </div>
+      </div>
   <%- include('./partials/footer.ejs') %>
 </body>
 </html>

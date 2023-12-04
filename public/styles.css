@@ -54,71 +54,10 @@ h3{
     margin-left: 20px;
 }
 
-
+ 
 .boldType{
     font-weight: bold;
 } 
 #headlineText{
     color: #a3250f;
 }
-.courseView {
-    display: none;
-    position: fixed;
-    width: 20%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 1px solid #a3250f;
-    padding: 20px;
-    background: white;
-}
-.courses {
-    text-align: center;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-.class {
-    margin-bottom: 20px;
-    width: 45%;
-    padding: 10px;
-    border: 1px solid #a3250f;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .class button {
-    margin: 10px;
-    padding: 3px;
-    background: rgba(222, 194, 194, 0.939);
-    border: 1px solid #a3250f;
-    border-radius: 3px;
-    font-size: 16px;
-  }
-  .form {
-    margin-bottom: 20px;
-    width: 45%;
-    padding: 10px;
-    border: 1px solid #a3250f;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .create-course {
-    width: 50%;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #a3250f;
-    border-radius: 5px;
-  }
-
-  .create-course form {
-    display: flex;
-    flex-direction: column;
-  }
-  .create-course button {
-    margin: 15px;
-    padding: 8px;
-    background: rgba(222, 194, 194, 0.939);
-    border: 1px solid #a3250f;
-    border-radius: 3px;
-    font-size: 16px;
-  }

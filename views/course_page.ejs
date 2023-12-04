@@ -1,58 +1,27 @@
-        <html lang="en">
-        <%- include('./partials/head.ejs') %>
-        <body>
-            <%- include('./partials/nav.ejs') %> 
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs') %> 
+
+    <div class="courses">
         <h2>Course Offerings</h2>
-            <div class="courses">
-
-                <% if(courses.length > 0) { %>
-                    <% courses.forEach(course => { %>
-                        <div class="class">
-                            <h3 class="title"><%= course.title %></h3> 
-                            <p class="instructor"><span class="boldType">Course Instructor: </span><%= course.instructor %></p>
-                            <p class="subject"><span class="boldType">Subject: </span><%= course.subject %></p>
-                            <p class="credits"><span class="boldType">Credits: </span><%= course.credits %></p>
-                            <button onclick="expandView('<%= course.title %>', '<%= course.instructor %>', '<%= course.description %>', '<%= course.schedule %>', '<%= course.campus %>', '<%= course.subject %>', '<%= course.credits %>')">View</button>
-                        </div>
-                    <% }) %>
-                <% } else { %>
-                    <p>There are no courses to display :(</p>
-                <% } %> 
-
-              </div>
-
-              <div id="courseView" class="courseView">
-                <h2 id="courseTitle">Course info</h2>
-                <div id="courseDetails">
-
+    
+        <% if(courses.length > 0) { %>
+            <% courses.forEach(course => { %>
+                <div class="class">
+                    <h3 class="title"><%= course.title %></h3> 
+                    <p class="description"><span class="boldType">Course Description: </span><%= course.description %></p>
+                    <p class="subject"><span class="boldType">Subject: </span><%= course.subject %></p>
+                    <p class="credits"><span class="boldType">Credits: </span><%= course.credits %></p>
+                    <br>
                 </div>
-                <button onclick="exitView()">Close</button>
-                <button onclick="register()">Register</button>
-                <button onclick="drop()">Drop</button>
-            </div>
-
-            <script>
-                function expandView(title, instructor, description, schedule, campus, subject, credits) {
-                    document.getElementById('courseTitle').innerText = title;
-                    document.getElementById('courseDetails').innerHTML = `
-                        <p class="instructor"><span class="boldType">Course Instructor: </span>${instructor}</p>
-                        <p class="description"><span class="boldType">Course Description: </span>${description}</p>
-                        <p class="schedule"><span class="boldType">Course Schedule/Meeting Time: </span>${schedule}</p>
-                        <p class="campus"><span class="boldType">Campus: </span>${campus}</p>
-                        <p class="subject"><span class="boldType">Subject: </span>${subject}</p>
-                        <p class="credits"><span class="boldType">Credits: </span>${credits}</p>
-                    `;
-                    document.getElementById('courseView').style.display = 'block';
-                }
-                function exitView() {
-                    document.getElementById('courseView').style.display = 'none';
-                }
-                function register() {
-                }
-                function drop() {
-                }
-            </script>
-
-          <%- include('./partials/footer.ejs') %>
-        </body>
-        </html>
+                
+            <% }) %>
+        <% } else { %>
+            <p>There are no courses to display :(</p>
+        <% } %> 
+    
+      </div>
+  <%- include('./partials/footer.ejs') %>
+</body>
+</html>
