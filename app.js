@@ -1,14 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Instructor = require('./models/instructor');
-const Student = require('./models/student');
-const Course = require('./models/course');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const app = express();
 
-const dbURI = 'mongodb+srv://PangolinPal:Pangolin_Pal_1@cluster0.i4h9m9n.mongodb.net/pangolin_data?retryWrites=true&w=majority';
+const Instructor = require('./models/instructor');
+const Student = require('./models/student');
+const Course = require('./models/course');
+
+const app = express();
+// mongodb+srv://PangolinPal:Pangolin_Pal_1@cluster0.i4h9m9n.mongodb.net/pangolin_data?retryWrites=true&w=majority
+
+const dbURI = 'mongodb+srv://teacher1:teacherpass@pangolincluster.4zlie5n.mongodb.net/PangolinDB?retryWrites=true&w=majority';
 mongoose.connect(dbURI)
   .then(() => app.listen(3000))
   .catch((err) => console.log(err));
@@ -102,10 +105,6 @@ app.get('/faculty', (req, res) => {
       res.status(404).render('404', { title: '404: Page Not Found' });
     }
   });
-  
-  app.listen(3000, () => {
-    console.log('Server is running on port 3000');
-  });
 
   // Add this route to app.js
 app.get('/faculty/add-course', (req, res) => {
@@ -155,20 +154,21 @@ app.get('/', (req, res) => {
         console.log(err);
       })
   })
-  app.get('/staff', (req, res) => {
-    Course.find()
-      .then((result) => {
-        res.render('create', { title: 'Staff', courses: result });
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  })
+app.get('/staff', (req, res) => {
+  Course.find()
+    .then((result) => {
+      res.render('create', { title: 'Staff', courses: result });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+});
 
-  app.get('/login', (req, res) => {
+app.get('/login', (req, res) => {
     res.render('login', { title: 'Sign In' });
 });
 
+// 404 page if none else found
 app.use((req, res) => {
     res.status(404).render('404', { title: '404: Page Not Found' });
 });
