@@ -156,37 +156,6 @@ app.post('/faculty/add-course', (req, res) => {
 //         });
 // });
 
-
-
-
-
-const courses = [
-    {
-        title: 'Scales 101', 
-        description: 'Learn how to maintain your scales for peak shininess.',
-        subject: 'Health',
-        credits: '2'
-    },
-    {
-        title: 'Effective Insect Hunting', 
-        description: 'How to find the best insects to eat, and fast!',
-        subject: 'Nutrition',
-        credits: '1.5'
-    },
-    {
-        title: 'Pangolin Taxonomy', 
-        description: 'Learn about the taxonomy and history of the Pangolin species.',
-        subject: 'History',
-        credits: '3'
-    },
-    {
-        title: 'Pangolinish 203', 
-        description: 'Advanced study of the Pangolish language and literature.',
-        subject: 'Pangolinish Studies',
-        credits: '2'
-    },
-]
-
 app.get('/', (req, res) => {
     res.render('index', { title: 'Home'}); 
 });
@@ -222,7 +191,6 @@ app.get('/students', (req, res) => {
     res.render('students', { title: 'Student Home Page' });
 });
 
-app.get('/login', (req, res) => {
 app.get('/login', (req, res) => {
     res.render('login', { title: 'Sign In' });
 });
