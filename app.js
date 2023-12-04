@@ -2,9 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
-const Instructor = require('./models/instructor');
-const Student = require('./models/student');
-const Course = require('./models/course');
+
 const { identity } = require('lodash');
 
 const app = express();
@@ -108,10 +106,6 @@ app.get('/faculty', (req, res) => {
     } else {
       res.status(404).render('404', { title: '404: Page Not Found' });
     }
-  });
-  
-  app.listen(3000, () => {
-    console.log('Server is running on port 3000');
   });
 
   // Add this route to app.js
