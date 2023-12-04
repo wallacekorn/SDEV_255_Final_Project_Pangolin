@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Instructor = require('./models/instructor');
 const Student = require('./models/student');
 const Course = require('./models/course');
+const { identity } = require('lodash');
 
 const app = express();
 
@@ -15,14 +16,24 @@ app.set('view engine', 'ejs');
 
 app.use(express.static('public'));
 
-//mongoose and mongo routes
-// app.get('/add-student', (req,res) => {
-//     const student = new Student({}
-//         name: ''
-
-//     })
-// })
-
+// // mongoose and mongo routes
+// app.get('/add-course', (req,res) => {
+//     const student = new Student({
+//         courseNum: '',
+//         name:'',
+//         description: '',
+//         subject: '',
+//         credits: '',
+//         createdby: ''
+//     });
+//     course.save()
+//         .then((result) => { // calls function when promise resolves
+//             res.send(results)
+//         })
+//         .catch((err) => {
+//             console.log(err);
+//         });
+// });
 
 
 
