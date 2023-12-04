@@ -4,12 +4,6 @@
     <%- include('./partials/nav.ejs') %> 
 
     <div class="courses">
-<html lang="en">
-<%- include('./partials/head.ejs') %>
-<body>
-    <%- include('./partials/nav.ejs') %> 
-
-    <div class="courses">
         <h2>Course Offerings</h2>
     
         <% if(courses.length > 0) { %>
@@ -30,24 +24,3 @@
       </div>
   <%- include('./partials/footer.ejs') %>
 </body>
-</html>
-    
-        <% if(courses.length > 0) { %>
-            <% courses.forEach(course => { %>
-                <div class="class">
-                    <h3 class="title"><%= course.title %></h3> 
-                    <p class="description"><span class="boldType">Course Description: </span><%= course.description %></p>
-                    <p class="subject"><span class="boldType">Subject: </span><%= course.subject %></p>
-                    <p class="credits"><span class="boldType">Credits: </span><%= course.credits %></p>
-                    <br>
-                </div>
-                
-            <% }) %>
-        <% } else { %>
-            <p>There are no courses to display :(</p>
-        <% } %> 
-    
-      </div>
-  <%- include('./partials/footer.ejs') %>
-</body>
-</html>
