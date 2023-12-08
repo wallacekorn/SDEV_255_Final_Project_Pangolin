@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const courseSchema = new Schema({ // defines schema
+const courseSchema = new Schema({
     courseNum: {
         type: Number,
         required: true
@@ -28,5 +28,5 @@ const courseSchema = new Schema({ // defines schema
     }
 });
 
-const Course = mongoose.model('Course', courseSchema); // creates model
-module.exports = Course; // makes available for import
+const Course = mongoose.model('Course', courseSchema);
+module.exports = Course;

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const instructorSchema = new Schema({ // defines schema
+const instructorSchema = new Schema({
     id: {
         type: Number,
         required: true
@@ -16,5 +16,5 @@ const instructorSchema = new Schema({ // defines schema
     },
 });
 
-const Instructor = mongoose.model('Instructor', instructorSchema); // creates model
-module.exports = Instructor; // makes available for import
+const Instructor = mongoose.model('Instructor', instructorSchema);
+module.exports = Instructor;

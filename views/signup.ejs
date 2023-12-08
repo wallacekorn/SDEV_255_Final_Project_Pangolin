@@ -1,0 +1,50 @@
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+    <body>
+        <%- include('./partials/nav.ejs') %> 
+
+        <div class="courses">
+            <h2>Student Sign up!</h2>
+            <br>
+            <h3>Join us</h3>
+            <form action="/signup" id="sign-up-form">
+                <label for="firstName">First Name:</label><br>
+                <input type="text" id="firstName" name="firstName"><br>
+                <label for="lastName">Last Name:</label><br>
+                <input type="text" id="lastName" name="lastName"><br>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required><br>
+                <div class="email error"></div>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" required><br>
+                <div class="password error"></div>
+                <button type="submit">Sign up</button>
+            </form>
+        </div>
+    <%- include('./partials/footer.ejs') %>
+<script>
+    const form = document.getElementById('sign-up-form');
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        console.log(form.firstName.value);
+        const firstName = form.firstName.value;
+        const lastName = form.lastName.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        try {
+            const res = await fetch('/signup', { 
+                method: 'POST', 
+                body: JSON.stringify({firstName, lastName, email, password}),
+                headers: {'Content-Type': 'application/json'}
+            });
+        }
+        catch (err) {
+            console.log(err);
+        }
+
+        
+    });
+</script>
+</body>
+</html>
