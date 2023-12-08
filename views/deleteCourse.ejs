@@ -10,16 +10,16 @@
 
         <!-- Display course details and confirmation message -->
         <div>
-            <strong><%= course.title %></strong><br>
+            <strong><%= course.name %></strong><br>
             <%= course.description %><br>
             Subject: <%= course.subject %><br>
-            Credits: <%= course.credits %>
+            Credits: <%= course.credits %><br>
+            Created By: <%= course.createdby %>
         </div>
-
-        <form action="/faculty/delete/<%= course.title %>" method="POST">
+    
+        <form action="/faculty/delete/<%= course.name %>" method="POST">
             <p>Are you sure you want to delete this course?</p>
             <button type="submit">Yes, Delete Course</button>
-        </form>
     </div>
     <%- include('./partials/footer.ejs') %>
 </body>

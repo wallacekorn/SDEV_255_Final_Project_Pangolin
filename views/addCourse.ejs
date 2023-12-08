@@ -10,18 +10,24 @@
 
         <!-- Form for adding a new course -->
         <form action="/faculty/add-course" method="POST">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required>
-
+            <label for="courseNum">Course Number:</label>
+            <input type="number" id="courseNum" name="courseNum" required>
+        
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        
             <label for="description">Description:</label>
             <textarea id="description" name="description" required></textarea>
-
+        
             <label for="subject">Subject Area:</label>
             <input type="text" id="subject" name="subject" required>
-
+        
             <label for="credits">Credits:</label>
             <input type="number" id="credits" name="credits" required>
-
+        
+            <label for="createdby">Created By:</label>
+            <input type="text" id="createdby" name="createdby" required>
+        
             <button type="submit">Add Course</button>
         </form>
     </div>
