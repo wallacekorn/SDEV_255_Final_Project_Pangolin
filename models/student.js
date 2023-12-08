@@ -24,6 +24,10 @@ const studentSchema = new Schema({
         type: Boolean,
         default: false
     },
+    isTeacher: {
+        type: Boolean,
+        default: false
+    },
     email: {
         type: String,
         required: [true, 'Please enter email address'],

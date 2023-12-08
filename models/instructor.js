@@ -14,6 +14,10 @@ const instructorSchema = new Schema({
         type: Array,
         required: false
     },
+    isTeacher: {
+        type: Boolean,
+        default: true
+    }
 });
 
 const Instructor = mongoose.model('Instructor', instructorSchema);

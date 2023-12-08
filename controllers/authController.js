@@ -21,6 +21,12 @@ const handleErrors = (err) => {
     return errors;
 }
 
+const createToken = (id) => {
+    return jwt.sign({ id }, 'super secret code', {
+        expiresIn: 172800 //seconds
+    });
+}
+
 module.exports.signup_get = (req, res) => {
     res.render('signup', { title: 'Sign Up' });
 } 
@@ -34,7 +40,9 @@ module.exports.signup_post = async (req, res) => {
 
     try {
         const student = await Student.create({ firstName, lastName,  email, password });
-        res.status(201).json(student);
+        const token = createToken(student._id);
+        res.cookie('jwt', token, {httpOnly: true, maxAge: 178000});
+        res.status(201).json(student._id);
     }
     catch(err) {
         const errors = handleErrors(err);  

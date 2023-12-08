@@ -22,11 +22,19 @@
             </form>
         </div>
     <%- include('./partials/footer.ejs') %>
+
+</body>
+</html>
 <script>
     const form = document.getElementById('sign-up-form');
-    
+    const emailErrorDiv = document.querySelector('.email.error');
+    const passwordErrorDiv = document.querySelector('.password.error');
+
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        emailErrorDiv.textContent = '';
+        passwordErrorDiv.textContent = '';
         console.log(form.firstName.value);
         const firstName = form.firstName.value;
         const lastName = form.lastName.value;
@@ -38,6 +46,14 @@
                 body: JSON.stringify({firstName, lastName, email, password}),
                 headers: {'Content-Type': 'application/json'}
             });
+            const data = await res.json();
+            if (data.errors) {
+                emailErrorDiv.textContent = data.errors.email;
+                passwordErrorDiv.textContent = data.errors.password;
+            }
+            if (data.student) {
+                location.assign('/');
+            }
         }
         catch (err) {
             console.log(err);
@@ -46,5 +62,3 @@
         
     });
 </script>
-</body>
-</html>
