@@ -12,7 +12,7 @@
           <!-- Display courses here -->
           <% courses.forEach(course => { %>
               <div>
-                  <%= course.courseNum %><strong> <%= course.title %></strong><br>
+                    <strong> <%= course.name %> <%= course.courseNum %></strong><br>
                   <%= course.description %><br>
                   Subject: <%= course.subject %><br>
                   Credits: <%= course.credits %>
