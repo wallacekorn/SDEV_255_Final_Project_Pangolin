@@ -70,3 +70,38 @@ form {
 .navItem {
     white-space: nowrap;
 }
+.courseView {
+    display: none;
+    position: fixed;
+    width: 40%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #a3250f;
+    padding: 20px;
+    background: white;
+    z-index: 9999;
+}
+
+.class,
+.form,
+.create-course {
+    margin-bottom: 20px;
+    width: 45%;
+    padding: 10px;
+    border: 1px solid #a3250f;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.class button,
+.form button,
+.create-course button {
+    margin: 10px;
+    padding: 8px;
+    background: rgba(222, 194, 194, 0.939);
+    border: 1px solid #a3250f;
+    border-radius: 3px;
+    font-size: 16px;
+    color: #a3250f;
+}

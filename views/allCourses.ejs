@@ -9,10 +9,10 @@
         <% if(courses.length > 0) { %>
         <% courses.forEach(course => { %>
             <div>
-                <%= course.courseID %><strong> <%= course.title %></strong><br>
-                <%= course.description %><br>
+                <strong> <%= course.name %> <%= course.courseID %></strong><br>
                 Subject: <%= course.subject %><br>
-                Credits: <%= course.credits %>
+                Credits: <%= course.credits %><br>
+                <button onclick="expandView('<%= course.courseID %>', '<%= course.name %>', '<%= course.description %>', '<%= course.subject %>', '<%= course.credits %>')">View</button>
             </div>
             <hr>
         <% }); %>
@@ -20,6 +20,32 @@
             <p>There are no courses to display :(</p>
         <% } %> 
     
-      </div>
+            </div>
+            <div id="courseView" class="courseView" style="display: none;">
+                <h2 id="courseTitle">Course info</h2>
+                <div id="courseDetails"></div>
+                <button onclick="exitView()">Close</button>
+                <button onclick="register()">Register</button>
+                <button onclick="drop()">Drop</button>
+            </div>
+
+            <script>
+                function expandView(courseNum, name, description, subject, credits) {
+                    document.getElementById('courseTitle').innerText = `${name} ${courseNum}`;
+                    document.getElementById('courseDetails').innerHTML = `
+                        <p class="description"><span class="boldType">Course Description: </span>${description}</p>
+                        <p class="subject"><span class="boldType">Subject: </span>${subject}</p>
+                        <p class="credits"><span class="boldType">Credits: </span>${credits}</p>
+                    `;
+                    document.getElementById('courseView').style.display = 'block';
+                }
+                function exitView() {
+                    document.getElementById('courseView').style.display = 'none';
+                }
+              function register() {
+              }
+              function drop() {
+              }
+          </script>
   <%- include('./partials/footer.ejs') %>
 </body>
