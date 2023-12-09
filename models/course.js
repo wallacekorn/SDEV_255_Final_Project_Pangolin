@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const courseSchema = new Schema({
-    courseNum: {
-        type: Number,
-        required: true
+    courseID: {
+        type: String,
+        required: true,
+        default: 0
     },
     name: {
         type: String,

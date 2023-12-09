@@ -12,10 +12,11 @@
           <!-- Display courses here -->
           <% courses.forEach(course => { %>
               <div>
-                  <%= course.courseNum %><strong> <%= course.title %></strong><br>
+                  <%= course.courseID %><strong> <%= course.name %></strong><br>
                   <%= course.description %><br>
                   Subject: <%= course.subject %><br>
-                  Credits: <%= course.credits %>
+                  Credits: <%= course.credits %><br>
+                  Created by: <%= course.createdby %><br>
                   <div class="course-actions">
                       <a href="/faculty/edit/<%= course.name %>">Edit</a>
                       <a href="/faculty/delete/<%= course.name %>">Delete</a>

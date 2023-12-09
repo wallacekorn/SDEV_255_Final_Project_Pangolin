@@ -10,8 +10,8 @@
 
         <!-- Form for editing the course -->
         <form action="/faculty/edit/<%= course.name %>" method="POST">
-            <label for="courseNum">Course Number:</label>
-            <input type="number" id="courseNum" name="courseNum" value="<%= course.courseNum %>" required>
+            <label for="courseID">Course Number:</label>
+            <input type="text" id="courseID" name="courseID" value="<%= course.courseID %>" required>
         
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" value="<%= course.name %>" required>

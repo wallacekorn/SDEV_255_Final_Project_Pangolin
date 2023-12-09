@@ -5,17 +5,13 @@ const bcrypt = require('bcrypt');
 
 
 const studentSchema = new Schema({
-    id: {
-        type: Number,
-        required: false
-    },
     firstName: {
         type: String,
         required: false,
     },
     lastName: {
         type: String,
-        required: true,
+        required: false,
     },
     courses: {
         type: Array

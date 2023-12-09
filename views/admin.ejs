@@ -9,23 +9,20 @@
           <br>
           <h3>Edit Faculty</h3>
       
-          <!-- Needs to be edited to show faculty list
-          <% courses.forEach(course => { %>
+          <% instructors.forEach(instructor => { %>
               <div>
-                  <%= course.courseNum %><strong> <%= course.title %></strong><br>
-                  <%= course.description %><br>
-                  Subject: <%= course.subject %><br>
-                  Credits: <%= course.credits %>
+                  Name: <strong> <%= instructor.firstName %>
+                  <%= instructor.lastName %></strong><br>
+                  Email: <%= instructor.email %><br>
+                  <!-- <%= instructor.courses %><br> -->
                   <div class="course-actions">
-                      <a href="/faculty/edit/<%= course.name %>">Edit</a>
-                      <a href="/faculty/delete/<%= course.name %>">Delete</a>
+                      <a href="/admin/edit/<%= instructor.email %>">Edit</a>
+                      <a href="/admin/delete/<%= instructor.email %>">Delete</a>
                   </div>
               </div>
               <hr>
           <% }); %>
-       -->
-          <!-- Add a link to the "Add Course" page -->
-          <!-- <a href="/faculty/add-course">Add Course</a> -->
+          <a href="/admin/add-instructor">Add Instructor</a>
       </div>
     
     </div>

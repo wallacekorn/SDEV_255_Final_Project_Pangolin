@@ -1,0 +1,32 @@
+<!-- addCourse.ejs -->
+
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs') %> 
+
+    <div class="courses">
+        <h2>Add New Instructor</h2>
+
+        <!-- Form for adding a new instructor -->
+        <form action="/admin/add-instructor" method="POST">
+            <label for="id">Instructor ID:</label>
+        
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+        
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+        
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        
+            <button type="submit">Add Instructor</button>
+        </form>
+    </div>
+    <%- include('./partials/footer.ejs') %>
+</body>
+</html>

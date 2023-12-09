@@ -1,0 +1,25 @@
+<!-- deleteInstructor.ejs -->
+
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs') %> 
+
+    <div class="courses">
+        <h2>Delete Instructor</h2>
+    
+        <!-- Display instructor details and confirmation message -->
+        <div>
+            <strong>Instructor Email: <%= instructor.email %></strong><br>
+            First Name: <%= instructor.firstName %><br>
+            Last Name: <%= instructor.lastName %><br>
+        </div>
+    
+        <form action="/admin/delete/<%= instructor.email %>" method="POST">
+            <p>Are you sure you want to delete this instructor?</p>
+            <button type="submit">Yes, Delete Instructor</button>
+    </div>
+    
+    <%- include('./partials/footer.ejs') %>
+</body>
+</html>

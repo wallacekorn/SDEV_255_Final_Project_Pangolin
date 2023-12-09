@@ -3,20 +3,24 @@ const express = require('express');
 const router = express.Router();
 const Course = require('../models/course');
 
+// Authentication
+const authMW = require('../middleware/authMiddleware');
+const authCheckInstructor = authMW.authCheckInstructor;
+
 
 // Display the faculty page with courses
-router.get('/', async (req, res) => {
+router.get('/', authCheckInstructor, async (req, res) => {
     try {
         const courses = await Course.find();
         res.render('faculty', { title: 'Faculty Home Page', courses });
     } catch (err) {
         console.error(err);
-        res.status(404).send('Unable to retrieve courses');
+        res.status(404).send('Page not found');
     }
 });
 
 // Display the course edit page
-router.get('/edit/:title', async (req, res) => {
+router.get('/edit/:title', authCheckInstructor, async (req, res) => {
     const courseTitle = req.params.title;
 
     try {
@@ -32,7 +36,7 @@ router.get('/edit/:title', async (req, res) => {
 router.post('/edit/:title', async (req, res) => {
     const courseTitle = req.params.title;
     const updatedCourse = {
-        courseNum: req.body.courseNum,
+        courseID: req.body.courseID,
         name: req.body.name,
         description: req.body.description,
         subject: req.body.subject,
@@ -50,7 +54,7 @@ router.post('/edit/:title', async (req, res) => {
 });
 
 // Display the course deletion confirmation page
-router.get('/delete/:name', async (req, res) => {
+router.get('/delete/:name', authCheckInstructor, async (req, res) => {
     const courseTitle = req.params.name;
     try {
         const course = await Course.findOne({ name: courseTitle });
@@ -63,7 +67,7 @@ router.get('/delete/:name', async (req, res) => {
 });
 
 // Handle course deletion
-router.post('/delete/:name', async (req, res) => {
+router.post('/delete/:name', authCheckInstructor, async (req, res) => {
     const courseTitle = req.params.name;
     try {
         const course = await Course.findOne({ name: courseTitle });
@@ -76,14 +80,14 @@ router.post('/delete/:name', async (req, res) => {
 });
 
 
-router.get('/add-course', (req, res) => {
+router.get('/add-course', authCheckInstructor, (req, res) => {
   res.render('addCourse', { title: 'Add Course' });
 });
 
-router.post('/add-course', async (req, res) => {
+router.post('/add-course', authCheckInstructor, async (req, res) => {
 try {
     const newCourse = new Course({
-        courseNum: req.body.courseNum,
+        courseID: req.body.courseID,
         name: req.body.name,
         description: req.body.description,
         subject: req.body.subject,

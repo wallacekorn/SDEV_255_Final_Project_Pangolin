@@ -3,9 +3,11 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const mongoose = require('mongoose');
-const authRoutes = require('./routes/authRoutes');
 
+const authRoutes = require('./routes/authRoutes');
 const facultyRoutes = require('./routes/facultyRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+const studentRoutes = require('./routes/studentRoutes');
 
 const Instructor = require('./models/instructor');
 const Student = require('./models/student');
@@ -30,8 +32,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //cookies middleware
 app.use(cookieParser());
 
+// student routes
+app.use('/students', studentRoutes);
 // faculty routes
 app.use('/faculty', facultyRoutes);
+// admin routes
+app.use('/admin', adminRoutes);
 
 // authentication routes
 app.use(authRoutes);
@@ -53,14 +59,6 @@ app.get('/courses', async (req, res) => {
 
 app.get('/singleCourse', (req, res) => {
     res.render('singleCourse', { title: 'Courses'});
-});
-
-app.get('/admin', (req, res) => {
-    res.render('admin', { title: 'Administration Home Page' });
-});
-
-app.get('/students', (req, res) => {
-    res.render('students', { title: 'Student Home Page' });
 });
 
 app.use((req, res) => {
