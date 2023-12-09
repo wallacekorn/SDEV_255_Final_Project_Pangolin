@@ -16,8 +16,14 @@ const instructorSchema = new Schema({
         type: Array,
         required: false
     },
+    isAdmin: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     isTeacher: {
         type: Boolean,
+        required: true,
         default: true
     },
     email: {

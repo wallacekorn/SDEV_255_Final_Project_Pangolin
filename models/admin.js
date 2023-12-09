@@ -4,18 +4,23 @@ const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
 
 
-const adminSchema = new Admin({
+const adminSchema = new Schema({
     isAdmin: {
         type: Boolean,
         required: true,
         default: true
     },
+    isTeacher: {
+        type: Boolean,
+        required: true,
+        default: true
+    },
     email: {
-    type: String,
-    required: [true, 'Please enter email address'],
-    unique: true,
-    lowercase: true,
-    validate: [isEmail, 'Please enter a valid email address']
+        type: String,
+        required: [true, 'Please enter email address'],
+        unique: true,
+        lowercase: true,
+        validate: [isEmail, 'Please enter a valid email address']
     },
     password: {
         type: String,

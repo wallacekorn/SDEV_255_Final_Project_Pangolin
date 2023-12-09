@@ -4,7 +4,7 @@
     <%- include('./partials/nav.ejs') %> 
 
     <div class="courses">
-        <h2>Log In</h2>
+        <h2>Log In (student only for now)</h2>
         <br>
         <form action="/login" method="post" id="log-in-form">
             <label for="emailLogin">Email Address:</label>
@@ -15,9 +15,16 @@
             <input type="password" name="passwordLogin" placeholder="Enter Password" required>
             <div class="password error"></div>
             <br><br>
-          <button type="submit">Log in</button>
-          </form>    
-      </div>
+            <button type="submit">Log in</button>
+        </form>
+        <br>
+        <p> Student login for testing (full access for now, can also be signed up for)</p>
+        <p>email: <br>-  1@1.com</p>
+        <p>password: <br>-  test123</p><br><br>
+        <p> Admin login for testing, all others can be created( doesn't currently work)</p>
+        <p>email: <br>-  admin@png.edu</p>
+        <p>password: <br>-  test123</p>
+    </div>
   <%- include('./partials/footer.ejs') %>
 </body>
 </html>
