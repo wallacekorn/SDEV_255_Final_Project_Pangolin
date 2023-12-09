@@ -55,6 +55,10 @@ app.get('/singleCourse', (req, res) => {
     res.render('singleCourse', { title: 'Courses'});
 });
 
+app.get('/admin', (req, res) => {
+    res.render('admin', { title: 'Administration Home Page' });
+});
+
 app.get('/students', (req, res) => {
     res.render('students', { title: 'Student Home Page' });
 });

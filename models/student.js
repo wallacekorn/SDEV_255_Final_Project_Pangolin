@@ -49,5 +49,18 @@ studentSchema.pre('save', async function (next) {
     next();
 });
 
+// static method to login student
+studentSchema.statics.login = async function(email, password) {
+    const student = await this.findOne({email});
+    if (student) {
+        const auth = await bcrypt.compare(password, student.password);
+        if (auth) {
+            return student;
+        }
+        throw Error('incorrect password');
+      }
+      throw Error('incorrect email');
+    };
+
 const Student = mongoose.model('Student', studentSchema);
 module.exports = Student;

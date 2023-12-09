@@ -6,12 +6,14 @@
     <div class="courses">
         <h2>Log In</h2>
         <br>
-        <form action="" method="post">
-            <label for="userName">Username:</label>
-            <input type="text" name="userName" placeholder="Enter Username" required>
+        <form action="/login" method="post" id="log-in-form">
+            <label for="emailLogin">Email Address:</label>
+            <input type="email" name="emailLogin" placeholder="Enter Email" required>
+            <div class="email error"></div>
             <br><br>
-            <label for="passwordInput">Password:</label>
-            <input type="password" name="passwordInput" placeholder="Enter Password" required>
+            <label for="passwordLogin">Password:</label>
+            <input type="password" name="passwordLogin" placeholder="Enter Password" required>
+            <div class="password error"></div>
             <br><br>
           <button type="submit">Log in</button>
           </form>    
@@ -20,14 +22,33 @@
 </body>
 </html>
 <script>
-  const form = document.querySelector('form');
-  
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+    const form = document.getElementById('log-in-form');
+    const emailErrorDiv = document.querySelector('.email.error');
+    const passwordErrorDiv = document.querySelector('.password.error');
 
-    const email = form.email.value;
-    const password = form.password.value;
-  
-    console.log(email, password);
-  });
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        emailErrorDiv.textContent = '';
+        passwordErrorDiv.textContent = '';
+        const email = form.emailLogin.value;
+        const password = form.passwordLogin.value;
+        try {
+            const res = await fetch('/login', { 
+                method: 'POST', 
+                body: JSON.stringify({email, password}),
+                headers: {'Content-Type': 'application/json'}
+            });
+            const data = await res.json();
+            if (data.errors) {
+                emailErrorDiv.textContent = data.errors.email;
+                passwordErrorDiv.textContent = data.errors.password;
+            }
+            if (data.student) {
+                location.assign('/');
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }        
+    });
 </script>

@@ -12,6 +12,16 @@ const handleErrors = (err) => {
         return errors;
     }
 
+    // incorrect email
+    if (err.message === 'incorrect email') {
+        errors.email = 'Email is not registered';
+      }
+
+    // incorrect password
+    if (err.message === 'incorrect password') {
+        errors.password = 'Password is incorrect';
+      }
+
     // validation errors
     if (err.message.includes('Student validation failed')){
         Object.values(err.errors).forEach(({properties}) => {
@@ -52,5 +62,15 @@ module.exports.signup_post = async (req, res) => {
 
 module.exports.login_post = async (req, res) => {
     const {email, password } = req.body;
-    res.send('user login');
+
+    //need conditional here to send it to the student model or teacher model
+    try {
+        const student = await Student.login(email, password);
+        const token = createToken(student._id);
+        res.cookie('jwt', token, {httpOnly: true, maxAge: 178000});
+        res.status(200).json({ student: student._id });
+    } catch (err) {
+        const errors = handleErrors(err);
+        res.status(400).json({errors});
+    }
 }
