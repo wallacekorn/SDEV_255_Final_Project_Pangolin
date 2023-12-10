@@ -1,5 +1,7 @@
 const { reduceRight } = require('lodash');
 const Student = require('../models/student');
+const Instructor = require('../models/instructor');
+const Admin = require('../models/admin');
 const jwt = require('jsonwebtoken');
 
 // handle errors
@@ -61,19 +63,34 @@ module.exports.signup_post = async (req, res) => {
 }
 
 module.exports.login_post = async (req, res) => {
-    const {email, password } = req.body;
-
-    //need conditional here to send it to the student model or teacher model
+    const { email, password } = req.body;
     try {
-        const student = await Student.login(email, password);
-        const token = createToken(student._id);
-        res.cookie('jwt', token, {httpOnly: true, maxAge: 178000});
-        res.status(200).json({ student: student._id });
+        const student = await Student.login(email, password).catch(() => null);
+        const instructor = await Instructor.login(email, password).catch(() => null);
+        const admin = await Admin.login(email, password).catch(() => null);
+        if (student) {
+            const token = createToken(student._id);
+            res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
+            res.status(200).json({ student: student._id });
+        }
+        else if(instructor) {
+            const token = createToken(instructor._id);
+            res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
+            res.status(200).json({ instructor: instructor._id });
+        }
+        else if(admin) {
+            const token = createToken(admin._id);
+            res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
+            res.status(200).json({ admin: admin._id });
+        }
+        else {
+            res.status(404).json({ error: 'User not found' });
+        }
     } catch (err) {
         const errors = handleErrors(err);
-        res.status(400).json({errors});
+        res.status(400).json({ errors });
     };
-}
+};
 
 module.exports.logout_get = (req, res) => {
     res.cookie('jwt', '', {maxAge: 1});

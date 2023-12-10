@@ -18,12 +18,7 @@
             <button type="submit">Log in</button>
         </form>
         <br>
-        <p> Student login for testing (full access for now, can also be signed up for)</p>
-        <p>email: <br>-  1@1.com</p>
-        <p>password: <br>-  test123</p><br><br>
-        <p> Admin login for testing, all others can be created( doesn't currently work)</p>
-        <p>email: <br>-  admin@png.edu</p>
-        <p>password: <br>-  test123</p>
+
     </div>
   <%- include('./partials/footer.ejs') %>
 </body>
@@ -50,7 +45,7 @@
                 emailErrorDiv.textContent = data.errors.email;
                 passwordErrorDiv.textContent = data.errors.password;
             }
-            if (data.student) {
+            if (data.student || data.instructor || data.admin) {
                 location.assign('/');
             }
         }
