@@ -5,7 +5,7 @@ const authCheckAdmin = (req, res, next) => {
     // verifies the token is valid
     if (token) {
         jwt.verify(token, 'super secret code', (err, decodedToken) => {
-        if (err) {
+        if (err || decodedToken.authType !== 'admin') {
             res.redirect('/login');
         } else {
             next();
@@ -21,7 +21,7 @@ const authCheckInstructor = (req, res, next) => {
         // verifies the token is valid
         if (token) {
             jwt.verify(token, 'super secret code', (err, decodedToken) => {
-            if (err) {
+            if (err || (decodedToken.authType !== 'admin' && decodedToken.authType !== 'instructor')) {
                 res.redirect('/login');
             } else {
                 next();
@@ -37,7 +37,7 @@ const token = req.cookies.jwt;
         // verifies the token is valid
         if (token) {
             jwt.verify(token, 'super secret code', (err, decodedToken) => {
-            if (err) {
+            if (err || (decodedToken.authType !== 'admin' && decodedToken.authType !== 'instructor' && decodedToken.authType !== 'student')) {
                 res.redirect('/login');
             } else {
                 next();

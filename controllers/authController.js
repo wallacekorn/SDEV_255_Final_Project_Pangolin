@@ -33,8 +33,8 @@ const handleErrors = (err) => {
     return errors;
 }
 
-const createToken = (id) => {
-    return jwt.sign({ id }, 'super secret code', {
+const createToken = (id, authType) => {
+    return jwt.sign({ id, authType }, 'super secret code', {
         expiresIn: 172800 //seconds
     });
 }
@@ -69,19 +69,19 @@ module.exports.login_post = async (req, res) => {
         const instructor = await Instructor.login(email, password).catch(() => null);
         const admin = await Admin.login(email, password).catch(() => null);
         if (student) {
-            const token = createToken(student._id);
+            const token = createToken(student._id, 'student');
             res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
-            res.status(200).json({ student: student._id });
+            res.status(200).json({ student: student._id, authType: 'student' });
         }
         else if(instructor) {
-            const token = createToken(instructor._id);
+            const token = createToken(instructor._id, 'instructor');
             res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
-            res.status(200).json({ instructor: instructor._id });
+            res.status(200).json({ instructor: instructor._id, authType: 'instructor' });
         }
         else if(admin) {
-            const token = createToken(admin._id);
+            const token = createToken(admin._id, 'admin');
             res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
-            res.status(200).json({ admin: admin._id });
+            res.status(200).json({ admin: admin._id, authType: 'admin' });
         }
         else {
             res.status(404).json({ error: 'User not found' });

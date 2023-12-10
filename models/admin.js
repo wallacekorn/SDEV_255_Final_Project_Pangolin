@@ -5,16 +5,6 @@ const bcrypt = require('bcrypt');
 
 
 const adminSchema = new Schema({
-    isAdmin: {
-        type: Boolean,
-        required: true,
-        default: true
-    },
-    isTeacher: {
-        type: Boolean,
-        required: true,
-        default: true
-    },
     email: {
         type: String,
         required: [true, 'Please enter email address'],

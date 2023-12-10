@@ -2,6 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 const Instructor = require('../models/instructor');
+const Admin = require('../models/admin');
 
 // Authentication
 const authMW = require('../middleware/authMiddleware');
@@ -37,7 +38,6 @@ router.post('/edit/:email', authCheckAdmin, async (req, res) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         courses: req.body.courses,
-        isTeacher: req.body.isTeacher,
         email: req.body.email,
         password: req.body.password
     };    
@@ -87,7 +87,6 @@ try {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         courses: req.body.courses,
-        isTeacher: req.body.isTeacher,
         email: req.body.email,
         password: req.body.password
     });
@@ -96,6 +95,25 @@ try {
 } catch (err) {
     console.error(err);
     res.status(404).send('instructor not added');
+}
+});
+
+router.get('/adminCreation', (req, res) => {
+    res.render('adminCreation', { title: 'Admin Creat-o-matic' });
+  });
+  
+router.post('/adminCreation', async (req, res) => {
+try {
+    const newAdmin = new Admin({
+        email: req.body.email,
+        password: req.body.password
+    });
+    console.log(newAdmin, ' newAdmin')
+    await newAdmin.save();
+    res.redirect('/admin');
+} catch (err) {
+    console.error(err);
+    res.status(404).send('Admin was not added');
 }
 });
 
