@@ -7,8 +7,9 @@ const Course = require('../models/course');
 // Authentication
 const authMW = require('../middleware/authMiddleware');
 const authCheckStudent = authMW.authCheckStudent;
+const loginCheck = authMW.loginCheck;
 
-router.get('/',authCheckStudent , (req, res) => {
+router.get('/', loginCheck, authCheckStudent,  (req, res) => {
     res.render('students', { title: 'Student Home Page' });
 });
 

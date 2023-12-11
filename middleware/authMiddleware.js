@@ -1,5 +1,27 @@
 const jwt = require('jsonwebtoken');
 
+const loginCheck = (req, res, next) => {
+    if (req.cookies.jwt) {
+        const token = req.cookies.jwt;
+        // verifies the token is valid
+        jwt.verify(token, 'super secret code', (err, decodedToken) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.locals.authType = decodedToken.authType || 'none';
+                res.locals.loggedIn = true;
+                next();
+            }
+        });
+    } else {
+        res.locals.loggedIn = false;
+        res.locals.authType = 'none';
+        console.log('res.locals being checked');
+        console.log(res.locals);
+        next();
+    }
+};
+
 const authCheckAdmin = (req, res, next) => {
   const token = req.cookies.jwt;
     // verifies the token is valid
@@ -8,6 +30,8 @@ const authCheckAdmin = (req, res, next) => {
         if (err || decodedToken.authType !== 'admin') {
             res.redirect('/login');
         } else {
+            res.locals.authType = 'admin';
+            console.log(res.locals.authType);
             next();
         }
         });
@@ -24,6 +48,9 @@ const authCheckInstructor = (req, res, next) => {
             if (err || (decodedToken.authType !== 'admin' && decodedToken.authType !== 'instructor')) {
                 res.redirect('/login');
             } else {
+                if (res.locals.authType !== 'admin') {
+                    res.locals.authType = 'instructor';
+                }
                 next();
             }
             });
@@ -40,6 +67,8 @@ const token = req.cookies.jwt;
             if (err || (decodedToken.authType !== 'admin' && decodedToken.authType !== 'instructor' && decodedToken.authType !== 'student')) {
                 res.redirect('/login');
             } else {
+                if (res.locals.authType !== 'admin' && res.locals.authType !== 'instructor') {
+                    res.locals.authType = 'student';}
                 next();
             }
             });
@@ -48,4 +77,4 @@ const token = req.cookies.jwt;
         }
 };
 
-module.exports = { authCheckAdmin, authCheckInstructor, authCheckStudent };
+module.exports = { authCheckAdmin, authCheckInstructor, authCheckStudent, loginCheck };

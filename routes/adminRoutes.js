@@ -7,9 +7,10 @@ const Admin = require('../models/admin');
 // Authentication
 const authMW = require('../middleware/authMiddleware');
 const authCheckAdmin = authMW.authCheckAdmin;
+const loginCheck = authMW.loginCheck;
 
 // Display the admin page with instructors
-router.get('/', authCheckAdmin,  async (req, res) => {
+router.get('/', loginCheck, authCheckAdmin, async (req, res) => {
     try {
         const instructors = await Instructor.find();
         res.render('admin', { title: 'Administration Home Page', instructors });
@@ -20,7 +21,7 @@ router.get('/', authCheckAdmin,  async (req, res) => {
 });
 
 // Display the instructor edit page
-router.get('/edit/:email', authCheckAdmin, async (req, res) => {
+router.get('/edit/:email',loginCheck ,authCheckAdmin, async (req, res) => {
     const instructorEmail = req.params.email;
     try {
         const instructor = await Instructor.findOne({ email: instructorEmail });
@@ -32,7 +33,7 @@ router.get('/edit/:email', authCheckAdmin, async (req, res) => {
 });
 
 // Handle instructor update
-router.post('/edit/:email', authCheckAdmin, async (req, res) => {
+router.post('/edit/:email', async (req, res) => {
     const instructorEmail = req.params.email;
     const updatedInstructor = {
         firstName: req.body.firstName,
@@ -52,7 +53,7 @@ router.post('/edit/:email', authCheckAdmin, async (req, res) => {
 });
 
 // Display the Instructor deletion confirmation page
-router.get('/delete/:email', authCheckAdmin, async (req, res) => {
+router.get('/delete/:email', loginCheck,authCheckAdmin, async (req, res) => {
     const instructorEmail = req.params.email;
     try {
         const instructor = await Instructor.findOne({ email: instructorEmail });
@@ -64,7 +65,7 @@ router.get('/delete/:email', authCheckAdmin, async (req, res) => {
 });
 
 // Handle instructor deletion
-router.post('/delete/:email', authCheckAdmin, async (req, res) => {
+router.post('/delete/:email', async (req, res) => {
     const instructorEmail = req.params.email;
     try {
         const instructor = await Instructor.findOne({ email: instructorEmail });
@@ -76,12 +77,11 @@ router.post('/delete/:email', authCheckAdmin, async (req, res) => {
     }
 });
 
-
-router.get('/add-instructor', authCheckAdmin, (req, res) => {
+router.get('/add-instructor', loginCheck,authCheckAdmin, (req, res) => {
   res.render('addInstructor', { title: 'Add Instructor' });
 });
 
-router.post('/add-instructor', authCheckAdmin, async (req, res) => {
+router.post('/add-instructor', async (req, res) => {
 try {
     const newInstructor = new Instructor({
         firstName: req.body.firstName,
@@ -95,25 +95,6 @@ try {
 } catch (err) {
     console.error(err);
     res.status(404).send('instructor not added');
-}
-});
-
-router.get('/adminCreation', (req, res) => {
-    res.render('adminCreation', { title: 'Admin Creat-o-matic' });
-  });
-  
-router.post('/adminCreation', async (req, res) => {
-try {
-    const newAdmin = new Admin({
-        email: req.body.email,
-        password: req.body.password
-    });
-    console.log(newAdmin, ' newAdmin')
-    await newAdmin.save();
-    res.redirect('/admin');
-} catch (err) {
-    console.error(err);
-    res.status(404).send('Admin was not added');
 }
 });
 

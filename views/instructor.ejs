@@ -5,7 +5,7 @@
 
         <!-- Display courses here -->
         <div class="courses">
-          <h2>Welcome Faculty!</h2>
+          <h2>Welcome Instructor!</h2>
           <br>
           <h3>Edit Courses</h3>
       
@@ -18,15 +18,15 @@
                   Credits: <%= course.credits %><br>
                   Created by: <%= course.createdby %><br>
                   <div class="course-actions">
-                      <a href="/faculty/edit/<%= course.name %>">Edit</a>
-                      <a href="/faculty/delete/<%= course.name %>">Delete</a>
+                      <a href="/instructor/edit/<%= course.name %>">Edit</a>
+                      <a href="/instructor/delete/<%= course.name %>">Delete</a>
                   </div>
               </div>
               <hr>
           <% }); %>
       
           <!-- Add a link to the "Add Course" page -->
-          <a href="/faculty/add-course">Add Course</a>
+          <a href="/instructor/add-course">Add Course</a>
       </div>
     
     </div>

@@ -3,6 +3,7 @@ const Student = require('../models/student');
 const Instructor = require('../models/instructor');
 const Admin = require('../models/admin');
 const jwt = require('jsonwebtoken');
+const { loginCheck } = require('../middleware/authMiddleware');
 
 // handle errors
 const handleErrors = (err) => {

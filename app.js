@@ -5,7 +5,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 
 const authRoutes = require('./routes/authRoutes');
-const facultyRoutes = require('./routes/facultyRoutes');
+const instructorRoutes = require('./routes/instructorRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 
@@ -14,6 +14,13 @@ const Student = require('./models/student');
 const Course = require('./models/course');
 
 const { identity } = require('lodash');
+
+//Auth
+const authMW = require('./middleware/authMiddleware');
+const loginCheck = authMW.loginCheck;
+const authCheckAdmin = authMW.authCheckAdmin;
+const authCheckInstructor = authMW.authCheckInstructor;
+const authCheckStudent = authMW.authCheckStudent;
 
 const app = express();
 // mongodb+srv://PangolinPal:Pangolin_Pal_1@cluster0.i4h9m9n.mongodb.net/pangolin_data?retryWrites=true&w=majority
@@ -32,22 +39,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //cookies middleware
 app.use(cookieParser());
 
-// student routes
-app.use('/students', studentRoutes);
-// faculty routes
-app.use('/faculty', facultyRoutes);
-// admin routes
-app.use('/admin', adminRoutes);
-
-// authentication routes
-app.use(authRoutes);
-
 // routes
-app.get('/', (req, res) => {
+app.get('/', loginCheck, (req, res) => {
     res.render('index', { title: 'Home'}); 
 });
 
-app.get('/courses', async (req, res) => {
+app.get('/courses',loginCheck, async (req, res) => {
   try {
       const courses = await Course.find();
       res.render('allCourses', { title: 'Courses', courses });
@@ -61,6 +58,37 @@ app.get('/singleCourse', (req, res) => {
     res.render('singleCourse', { title: 'Courses'});
 });
 
+
+app.get('/adminCreation', (req, res) => {
+    res.render('adminCreation', { title: 'Admin Creat-o-matic' });
+  });
+  
+app.post('/adminCreation', async (req, res) => {
+try {
+    const newAdmin = new Admin({
+        email: req.body.email,
+        password: req.body.password
+    });
+    console.log(newAdmin, ' newAdmin')
+    await newAdmin.save();
+    res.redirect('/admin');
+} catch (err) {
+    console.error(err);
+    res.status(404).send('Admin was not added');
+}
+});
+
+// authentication routes
+app.use(authRoutes);
+// student routes
+app.use('/students', studentRoutes);
+// instructor routes
+app.use('/instructor', instructorRoutes);
+// admin routes
+app.use('/admin', adminRoutes);
+
+
+// 404 route
 app.use((req, res) => {
     res.status(404).render('404', { title: '404: Page Not Found' });
 });

@@ -6,13 +6,14 @@ const Course = require('../models/course');
 // Authentication
 const authMW = require('../middleware/authMiddleware');
 const authCheckInstructor = authMW.authCheckInstructor;
+const loginCheck = authMW.loginCheck;
 
 
-// Display the faculty page with courses
-router.get('/', authCheckInstructor, async (req, res) => {
+// Display the instructor page with courses
+router.get('/', loginCheck, authCheckInstructor, async (req, res) => {
     try {
         const courses = await Course.find();
-        res.render('faculty', { title: 'Faculty Home Page', courses });
+        res.render('instructor', { title: 'Instructor Home Page', courses });
     } catch (err) {
         console.error(err);
         res.status(404).send('Page not found');
@@ -20,9 +21,8 @@ router.get('/', authCheckInstructor, async (req, res) => {
 });
 
 // Display the course edit page
-router.get('/edit/:title', authCheckInstructor, async (req, res) => {
+router.get('/edit/:title', loginCheck, authCheckInstructor, async (req, res) => {
     const courseTitle = req.params.title;
-
     try {
         const course = await Course.findOne({ name: courseTitle });
         res.render('editCourse', { title: 'Edit Course', course });
@@ -46,7 +46,7 @@ router.post('/edit/:title', async (req, res) => {
     try {
         const course = await Course.findOne({ name: courseTitle });
         await Course.updateOne({ name: courseTitle }, updatedCourse);
-        res.redirect('/faculty');
+        res.redirect('/instructor');
     } catch (err) {
         console.error(err);
         res.status(404).send('Could not update the course');
@@ -54,7 +54,7 @@ router.post('/edit/:title', async (req, res) => {
 });
 
 // Display the course deletion confirmation page
-router.get('/delete/:name', authCheckInstructor, async (req, res) => {
+router.get('/delete/:name', loginCheck,authCheckInstructor, async (req, res) => {
     const courseTitle = req.params.name;
     try {
         const course = await Course.findOne({ name: courseTitle });
@@ -67,12 +67,12 @@ router.get('/delete/:name', authCheckInstructor, async (req, res) => {
 });
 
 // Handle course deletion
-router.post('/delete/:name', authCheckInstructor, async (req, res) => {
+router.post('/delete/:name', async (req, res) => {
     const courseTitle = req.params.name;
     try {
         const course = await Course.findOne({ name: courseTitle });
         await Course.deleteOne({ name: courseTitle });
-        res.redirect('/faculty');
+        res.redirect('/instructor');
     } catch (err) {
         console.error(err);
         res.status(404).send('Course could not be deleted.');
@@ -80,11 +80,11 @@ router.post('/delete/:name', authCheckInstructor, async (req, res) => {
 });
 
 
-router.get('/add-course', authCheckInstructor, (req, res) => {
+router.get('/add-course', loginCheck, authCheckInstructor, (req, res) => {
   res.render('addCourse', { title: 'Add Course' });
 });
 
-router.post('/add-course', authCheckInstructor, async (req, res) => {
+router.post('/add-course', async (req, res) => {
 try {
     const newCourse = new Course({
         courseID: req.body.courseID,
@@ -95,7 +95,7 @@ try {
         createdby: req.body.createdby
     });
     await newCourse.save();
-    res.redirect('/faculty');
+    res.redirect('/instructor');
 } catch (err) {
     console.error(err);
     res.status(404).send('Course not added');
