@@ -16,8 +16,6 @@ const loginCheck = (req, res, next) => {
     } else {
         res.locals.loggedIn = false;
         res.locals.authType = 'none';
-        console.log('res.locals being checked');
-        console.log(res.locals);
         next();
     }
 };
