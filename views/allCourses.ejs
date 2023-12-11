@@ -2,19 +2,20 @@
 <%- include('./partials/head.ejs') %>
 <body>
     <%- include('./partials/nav.ejs') %> 
-
+    <h2>Course Offerings</h2>
     <div class="courses">
-        <h2>Course Offerings</h2>
+        
     
         <% if(courses.length > 0) { %>
         <% courses.forEach(course => { %>
-            <div>
-                <strong> <%= course.name %> <%= course.courseID %></strong><br>
+            <div class="class">
+                <strong> <%= course.courseID %></strong><br>
+                <%= course.name %><br>
                 Subject: <%= course.subject %><br>
                 Credits: <%= course.credits %><br>
-                <button onclick="expandView('<%= course.courseID %>', '<%= course.name %>', '<%= course.description %>', '<%= course.subject %>', '<%= course.credits %>')">View</button>
+                <button onclick="expandView('<%= course.courseID %>', '<%= course.name %>', '<%= course.description %>', '<%= course.subject %>', '<%= course.credits %>', '<%= course.createdby %>')">View</button>
             </div>
-            <hr>
+            
         <% }); %>
         <% } else { %>
             <p>There are no courses to display :(</p>
@@ -26,16 +27,18 @@
                 <div id="courseDetails"></div>
                 <button onclick="exitView()">Close</button>
                 <button onclick="register()">Register</button>
-                <button onclick="drop()">Drop</button>
+                
             </div>
 
             <script>
-                function expandView(courseNum, name, description, subject, credits) {
-                    document.getElementById('courseTitle').innerText = `${name} ${courseNum}`;
+                function expandView(courseID, name, description, subject, credits, createdby) {
+                    document.getElementById('courseTitle').innerText = `${courseID}`;
                     document.getElementById('courseDetails').innerHTML = `
+                        <p class="name"><span class="boldType">Course Name: </span>${name}</p>
                         <p class="description"><span class="boldType">Course Description: </span>${description}</p>
                         <p class="subject"><span class="boldType">Subject: </span>${subject}</p>
                         <p class="credits"><span class="boldType">Credits: </span>${credits}</p>
+                        <p class="createdby"><span class="boldType">Course Instructor: </span>${createdby}</p><br>
                     `;
                     document.getElementById('courseView').style.display = 'block';
                 }
@@ -44,8 +47,7 @@
                 }
               function register() {
               }
-              function drop() {
-              }
+              
           </script>
   <%- include('./partials/footer.ejs') %>
 </body>
