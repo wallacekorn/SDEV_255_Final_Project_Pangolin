@@ -34,8 +34,8 @@ const handleErrors = (err) => {
     return errors;
 }
 
-const createToken = (id, authType, email) => {
-    return jwt.sign({ id, authType, email}, 'super secret code', {
+const createToken = (id, authType, email, firstName, lastName, courses) => {
+    return jwt.sign({ id, authType, email, firstName, lastName, courses}, 'super secret code', {
         expiresIn: 172800 //seconds
     });
 }
@@ -70,19 +70,24 @@ module.exports.login_post = async (req, res) => {
         const instructor = await Instructor.login(email, password).catch(() => null);
         const admin = await Admin.login(email, password).catch(() => null);
         if (student) {
-            const token = createToken(student._id, 'student', email);
+            const firstName = student.firstName;
+            const lastName = student.lastName;
+            const courses = student.courses;
+            const token = createToken(student._id, 'student', email, firstName, lastName, courses );
             res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
-            res.status(200).json({ student: student._id, authType: 'student', email: student.email });
+            res.status(200).json({ student: student._id, authType: 'student', email});
         }
         else if(instructor) {
-            const token = createToken(instructor._id, 'instructor', email);
+            const firstName = instructor.firstName;
+            const lastName = instructor.lastName;
+            const token = createToken(instructor._id, 'instructor', email, firstName, lastName);
             res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
-            res.status(200).json({ instructor: instructor._id, authType: 'instructor', email: instructor.email });
+            res.status(200).json({ instructor: instructor._id, authType: 'instructor', email });
         }
         else if(admin) {
             const token = createToken(admin._id, 'admin', email);
             res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
-            res.status(200).json({ admin: admin._id, authType: 'admin', email: admin.email });
+            res.status(200).json({ admin: admin._id, authType: 'admin', email });
         }
         else {
             res.status(404).json({ error: 'User not found' });

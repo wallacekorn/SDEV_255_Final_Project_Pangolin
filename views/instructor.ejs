@@ -5,7 +5,12 @@
 
         <!-- Display courses here -->
         <div class="instructor-body-div">
-          <h2>Welcome Instructor!</h2>
+        <% if(firstName && lastName) { %> <!-- This is because Admin don't have first/last name -->
+            <h2>Welcome <%= firstName %> <%= lastName %>!</h2>
+        <% } else { %>
+            <h2>Welcome Admin!</h2>
+        <% } %>
+
           <br>
           <h3>Edit Courses</h3>
       

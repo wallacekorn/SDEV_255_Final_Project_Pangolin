@@ -12,7 +12,6 @@ const loginCheck = authMW.loginCheck;
 // Display the instructor page with courses
 router.get('/', loginCheck, authCheckInstructor, async (req, res) => {
     try {
-        console.log('res.locals: ', res);
         let email = res.locals.email;
         const instructor_courses = await Course.find({ createdby: email }); // gets list of courses by who created it(the instructor signed in)
         res.render('instructor', { title: 'Instructor Home Page', instructor_courses });
@@ -61,10 +60,10 @@ router.get('/delete/:name', loginCheck,authCheckInstructor, async (req, res) => 
     try {
         const course = await Course.findOne({ name: courseTitle });
         res.render('deleteCourse', { title: 'Delete Course', course });
-        res.status(404).render('404', { title: '404: Page Not Found' });
+        
     } catch (err) {
         console.error(err);
-        res.status(404).send('Course not found.');
+        res.status(404).render('404', { title: '404: Page Not Found' });
     }
 });
 

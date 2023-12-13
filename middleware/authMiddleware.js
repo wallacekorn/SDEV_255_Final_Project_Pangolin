@@ -29,6 +29,7 @@ const authCheckAdmin = (req, res, next) => {
             res.redirect('/login');
         } else {
             res.locals.authType = 'admin'; // sets authType to admin if admin
+            res.locals.email = decodedToken.email;
             next();
         }
         });
@@ -49,6 +50,8 @@ const authCheckInstructor = (req, res, next) => {
                     res.locals.authType = 'instructor';
                 }
                 res.locals.email = decodedToken.email;
+                res.locals.firstName = decodedToken.firstName;
+                res.locals.lastName = decodedToken.lastName;
                 next();
             }
             });
@@ -58,7 +61,7 @@ const authCheckInstructor = (req, res, next) => {
 };
 
 const authCheckStudent = (req, res, next) => {
-const token = req.cookies.jwt;
+        const token = req.cookies.jwt;
         // verifies the token is valid
         if (token) {
             jwt.verify(token, 'super secret code', (err, decodedToken) => {
@@ -67,6 +70,10 @@ const token = req.cookies.jwt;
             } else {
                 if (res.locals.authType !== 'admin' && res.locals.authType !== 'instructor') {
                     res.locals.authType = 'student';}
+                res.locals.email = decodedToken.email;
+                res.locals.firstName = decodedToken.firstName;
+                res.locals.lastName = decodedToken.lastName;
+                res.locals.scheduled_courses = decodedToken.courses;
                 next();
             }
             });
