@@ -12,6 +12,7 @@ const loginCheck = authMW.loginCheck;
 // Display the instructor page with courses
 router.get('/', loginCheck, authCheckInstructor, async (req, res) => {
     try {
+        // console.log(authType);
         const courses = await Course.find();
         res.render('instructor', { title: 'Instructor Home Page', courses });
     } catch (err) {
