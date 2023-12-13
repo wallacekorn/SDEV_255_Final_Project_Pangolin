@@ -25,11 +25,10 @@ const authCheckAdmin = (req, res, next) => {
     // verifies the token is valid
     if (token) {
         jwt.verify(token, 'super secret code', (err, decodedToken) => {
-        if (err || decodedToken.authType !== 'admin') {
+        if (err || decodedToken.authType !== 'admin') { //redirects if not admin
             res.redirect('/login');
         } else {
-            res.locals.authType = 'admin';
-            console.log(res.locals.authType);
+            res.locals.authType = 'admin'; // sets authType to admin if admin
             next();
         }
         });
@@ -46,9 +45,10 @@ const authCheckInstructor = (req, res, next) => {
             if (err || (decodedToken.authType !== 'admin' && decodedToken.authType !== 'instructor')) {
                 res.redirect('/login');
             } else {
-                if (res.locals.authType !== 'admin') {
+                if (res.locals.authType !== 'admin') { // preserves admin authtype
                     res.locals.authType = 'instructor';
                 }
+                res.locals.email = decodedToken.email;
                 next();
             }
             });

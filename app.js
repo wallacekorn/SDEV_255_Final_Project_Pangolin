@@ -24,8 +24,8 @@ const authCheckInstructor = authMW.authCheckInstructor;
 const authCheckStudent = authMW.authCheckStudent;
 
 const app = express();
-// mongodb+srv://teacher1:teacherpass@pangolincluster.4zlie5n.mongodb.net/PangolinDB?retryWrites=true&w=majority
-const dbURI = 'mongodb+srv://PangolinPal:Pangolin_Pal_1@cluster0.i4h9m9n.mongodb.net/pangolin_data?retryWrites=true&w=majority';
+// mongodb+srv://PangolinPal:Pangolin_Pal_1@cluster0.i4h9m9n.mongodb.net/pangolin_data?retryWrites=true&w=majority
+const dbURI = 'mongodb+srv://teacher1:teacherpass@pangolincluster.4zlie5n.mongodb.net/PangolinDB?retryWrites=true&w=majority';
 mongoose.connect(dbURI)
     .then((result) => app.listen(3001))
     .catch((err) => console.log(err));

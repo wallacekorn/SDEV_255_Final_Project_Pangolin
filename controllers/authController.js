@@ -34,8 +34,8 @@ const handleErrors = (err) => {
     return errors;
 }
 
-const createToken = (id, authType) => {
-    return jwt.sign({ id, authType }, 'super secret code', {
+const createToken = (id, authType, email) => {
+    return jwt.sign({ id, authType, email}, 'super secret code', {
         expiresIn: 172800 //seconds
     });
 }
@@ -53,9 +53,9 @@ module.exports.signup_post = async (req, res) => {
 
     try {
         const student = await Student.create({ firstName, lastName,  email, password });
-        const token = createToken(student._id);
+        const token = createToken(student._id, 'student');
         res.cookie('jwt', token, {httpOnly: true, maxAge: 178000});
-        res.status(201).json(student._id);
+        res.status(201).json({student: student._id, authType: 'student'});
     }
     catch(err) {
         const errors = handleErrors(err);  
@@ -70,19 +70,19 @@ module.exports.login_post = async (req, res) => {
         const instructor = await Instructor.login(email, password).catch(() => null);
         const admin = await Admin.login(email, password).catch(() => null);
         if (student) {
-            const token = createToken(student._id, 'student');
+            const token = createToken(student._id, 'student', email);
             res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
-            res.status(200).json({ student: student._id, authType: 'student' });
+            res.status(200).json({ student: student._id, authType: 'student', email: student.email });
         }
         else if(instructor) {
-            const token = createToken(instructor._id, 'instructor');
+            const token = createToken(instructor._id, 'instructor', email);
             res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
-            res.status(200).json({ instructor: instructor._id, authType: 'instructor' });
+            res.status(200).json({ instructor: instructor._id, authType: 'instructor', email: instructor.email });
         }
         else if(admin) {
-            const token = createToken(admin._id, 'admin');
+            const token = createToken(admin._id, 'admin', email);
             res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
-            res.status(200).json({ admin: admin._id, authType: 'admin' });
+            res.status(200).json({ admin: admin._id, authType: 'admin', email: admin.email });
         }
         else {
             res.status(404).json({ error: 'User not found' });

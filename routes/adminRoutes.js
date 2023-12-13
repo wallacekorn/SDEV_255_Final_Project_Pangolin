@@ -2,6 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 const Instructor = require('../models/instructor');
+const Course = require('../models/course');
+const Student = require('../models/student');
 const Admin = require('../models/admin');
 
 // Authentication
@@ -13,7 +15,9 @@ const loginCheck = authMW.loginCheck;
 router.get('/', loginCheck, authCheckAdmin, async (req, res) => {
     try {
         const instructors = await Instructor.find();
-        res.render('admin', { title: 'Administration Home Page', instructors });
+        const courses = await Course.find();
+        const students = await Student.find();
+        res.render('admin', { title: 'Administration Home Page', instructors, courses, students });
     } catch (err) {
         console.error(err);
         res.status(404).send('No instructors found');

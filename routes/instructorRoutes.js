@@ -12,9 +12,10 @@ const loginCheck = authMW.loginCheck;
 // Display the instructor page with courses
 router.get('/', loginCheck, authCheckInstructor, async (req, res) => {
     try {
-        // console.log(authType);
-        const courses = await Course.find();
-        res.render('instructor', { title: 'Instructor Home Page', courses });
+        console.log('res.locals: ', res);
+        let email = res.locals.email;
+        const instructor_courses = await Course.find({ createdby: email }); // gets list of courses by who created it(the instructor signed in)
+        res.render('instructor', { title: 'Instructor Home Page', instructor_courses });
     } catch (err) {
         console.error(err);
         res.status(404).send('Page not found');
