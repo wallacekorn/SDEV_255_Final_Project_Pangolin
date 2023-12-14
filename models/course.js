@@ -1,33 +1,25 @@
+// Import necessary modules and packages
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const courseSchema = new Schema({
-    courseID: {
-        type: String,
-        required: true,
-        default: 0
-    },
-    name: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        required: true
-    },
-    subject: {
-        type: String,
-        required: true
-    },
-    credits: {
-        type: Number,
-        required: true
-    },
-    createdby: {
-        type: String,
-        required: true
-    }
+// Define the Course schema
+const courseSchema = new mongoose.Schema({
+  // Course details
+  title: {
+    type: String,
+    required: [true, 'Please enter a course title'],
+  },
+  description: {
+    type: String,
+    required: [true, 'Please enter a course description'],
+  },
+  instructor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Instructor',
+    required: [true, 'Please select an instructor for the course'],
+  },
+  // Other fields can be added based on the requirements
 });
 
+// Create and export the Course model
 const Course = mongoose.model('Course', courseSchema);
 module.exports = Course;
