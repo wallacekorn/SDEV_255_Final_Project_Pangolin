@@ -1,6 +1,8 @@
+// Import necessary modules and packages
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Define Course Schema
 const courseSchema = new Schema({
     courseID: {
         type: String,
@@ -30,5 +32,6 @@ const courseSchema = new Schema({
     }
 });
 
+// Allow for export
 const Course = mongoose.model('Course', courseSchema);
 module.exports = Course;

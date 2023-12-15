@@ -1,3 +1,4 @@
+// Importing required modules and models
 const { reduceRight } = require('lodash');
 const Student = require('../models/student');
 const Instructor = require('../models/instructor');
@@ -5,29 +6,30 @@ const Admin = require('../models/admin');
 const jwt = require('jsonwebtoken');
 const { loginCheck } = require('../middleware/authMiddleware');
 
-// handle errors
+// Handle errors during signup and login
 const handleErrors = (err) => {
     console.log(err.message, err.code);
-    let errors = {email: '', password: '' };
+    let errors = { email: '', password: '' };
 
+    // Check for duplicate email (code 11000)
     if (err.code === 11000) {
-        errors.email = 'that email is already registered';
+        errors.email = 'That email is already registered';
         return errors;
     }
 
-    // incorrect email
+    // Incorrect email
     if (err.message === 'incorrect email') {
         errors.email = 'Email is not registered';
-      }
+    }
 
-    // incorrect password
+    // Incorrect password
     if (err.message === 'incorrect password') {
         errors.password = 'Password is incorrect';
-      }
+    }
 
-    // validation errors
-    if (err.message.includes('Student validation failed')){
-        Object.values(err.errors).forEach(({properties}) => {
+    // Validation errors
+    if (err.message.includes('Student validation failed')) {
+        Object.values(err.errors).forEach(({ properties }) => {
             errors[properties.path] = properties.message;
         });
     }
@@ -40,19 +42,22 @@ const createToken = (id, authType, email, firstName, lastName, student_courses) 
     });
 }
 
+// Handle GET request to render signup page
 module.exports.signup_get = (req, res) => {
     res.render('signup', { title: 'Sign Up' });
-} 
-  
+}
+
+// Handle GET request to render login page
 module.exports.login_get = (req, res) => {
     res.render('login', { title: 'Log In' });
 }
 
+// Handle POST request for user signup
 module.exports.signup_post = async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
 
     try {
-        const student = await Student.create({ firstName, lastName,  email, password });
+        const student = await Student.create({ firstName, lastName, email, password });
         const token = createToken(student._id, 'student');
         res.cookie('jwt', token, {httpOnly: true, maxAge: 178000});
         res.status(201).json({student: student._id, authType: 'student'});
@@ -63,12 +68,17 @@ module.exports.signup_post = async (req, res) => {
     }
 }
 
+// Handle POST request for user login
 module.exports.login_post = async (req, res) => {
     const { email, password } = req.body;
     try {
+        // Try to login as a student
         const student = await Student.login(email, password).catch(() => null);
+        // Try to login as an instructor
         const instructor = await Instructor.login(email, password).catch(() => null);
+        // Try to login as an admin
         const admin = await Admin.login(email, password).catch(() => null);
+
         if (student) {
             const firstName = student.firstName;
             const lastName = student.lastName;
@@ -99,7 +109,8 @@ module.exports.login_post = async (req, res) => {
     };
 };
 
+// Handle GET request to log out
 module.exports.logout_get = (req, res) => {
-    res.cookie('jwt', '', {maxAge: 1});
+    res.cookie('jwt', '', { maxAge: 1 });
     res.redirect('/');
 }
