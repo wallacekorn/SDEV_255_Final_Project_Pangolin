@@ -9,7 +9,7 @@
         <!-- Text on these three should all be "my page" or something similar -->
         <!-- I left it this way so its easier to understand until finished -->
         
-        <% if (locals.authType === 'student' || locals.authType === 'instructor' || locals.authType === 'admin') { %><li><a class="navItem" href="/students">Student 🎓 | </a></li><% } %>
+        <% if (locals.authType === 'student') { %><li><a class="navItem" href="/students">Student 🎓 | </a></li><% } %>
         <% if (locals.authType === 'admin') { %><li><a class="navItem" href="/admin">Admin 🛠️ | </a></li><% } %>
         <% if (locals.authType === 'instructor' || locals.authType === 'admin') { %><li><a class="navItem" href="/instructor">Instructor 👨‍🏫 | </a></li><% } %>
         <% if (locals.loggedIn != true) { %>
