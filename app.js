@@ -36,6 +36,7 @@ const dbURI = 'mongodb+srv://teacher1:teacherpass@pangolincluster.4zlie5n.mongod
 // Connecting to MongoDB and starting the Express app
 mongoose.connect(dbURI)
     .then((result) => app.listen(3000))
+
     .catch((err) => console.log(err));
 
 // Setting the view engine and views directory
@@ -72,8 +73,8 @@ app.get('/courses',loginCheck, async (req, res) => {
 app.get('/adminCreation', (req, res) => {
     // Rendering the 'adminCreation' view with the title 'Admin Creation'
     res.render('adminCreation', { title: 'Admin Creation' });
-});
-
+  });
+  
 app.post('/adminCreation', async (req, res) => {
     // Handling the creation of a new admin
     try {

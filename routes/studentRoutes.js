@@ -1,10 +1,11 @@
+// Importing necessary modules and models
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const Student = require('../models/student');
 const Course = require('../models/course');
 
-// Authentication
+// Authentication middleware
 const authMW = require('../middleware/authMiddleware');
 const authCheckStudent = authMW.authCheckStudent;
 const loginCheck = authMW.loginCheck;

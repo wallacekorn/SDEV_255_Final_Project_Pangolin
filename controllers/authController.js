@@ -59,12 +59,11 @@ module.exports.signup_post = async (req, res) => {
     try {
         const student = await Student.create({ firstName, lastName, email, password });
         const token = createToken(student._id, 'student');
-        res.cookie('jwt', token, {httpOnly: true, maxAge: 178000});
-        res.status(201).json({student: student._id, authType: 'student'});
-    }
-    catch(err) {
-        const errors = handleErrors(err);  
-        res.status(400).send({errors});
+        res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
+        res.status(201).json({ student: student._id, authType: 'student' });
+    } catch (err) {
+        const errors = handleErrors(err);
+        res.status(400).send({ errors });
     }
 }
 
@@ -86,21 +85,18 @@ module.exports.login_post = async (req, res) => {
 
             const token = createToken(student._id, 'student', email, firstName, lastName, student_courses );
             res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
-            res.status(200).json({ student: student._id, authType: 'student', email});
-        }
-        else if(instructor) {
+            res.status(200).json({ student: student._id, authType: 'student', email });
+        } else if (instructor) {
             const firstName = instructor.firstName;
             const lastName = instructor.lastName;
             const token = createToken(instructor._id, 'instructor', email, firstName, lastName);
             res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
             res.status(200).json({ instructor: instructor._id, authType: 'instructor', email });
-        }
-        else if(admin) {
+        } else if (admin) {
             const token = createToken(admin._id, 'admin', email);
             res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
             res.status(200).json({ admin: admin._id, authType: 'admin', email });
-        }
-        else {
+        } else {
             res.status(404).json({ error: 'User not found' });
         }
     } catch (err) {

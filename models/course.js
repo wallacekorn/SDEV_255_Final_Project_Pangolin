@@ -2,21 +2,20 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Define Course Schema
+// Define the Course schema
 const courseSchema = new Schema({
     courseID: {
         type: String,
         required: true,
-        unique: true,
         default: 0
     },
     name: {
         type: String,
-        required: true
+        required: [true, 'Please enter a course name'],
     },
     description: {
         type: String,
-        required: true
+        required:  [true, 'Please enter a course description'],
     },
     subject: {
         type: String,
@@ -28,10 +27,10 @@ const courseSchema = new Schema({
     },
     createdby: {
         type: String,
-        required: true
+        required: [true, 'Please select an instructor for the course'],
     }
 });
 
-// Allow for export
+// Create and export the Course model
 const Course = mongoose.model('Course', courseSchema);
 module.exports = Course;
