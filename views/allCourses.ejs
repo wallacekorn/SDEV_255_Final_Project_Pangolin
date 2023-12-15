@@ -26,7 +26,9 @@
                 <h2 id="courseTitle">Course info</h2>
                 <div id="courseDetails"></div>
                 <button onclick="exitView()">Close</button>
-                <button onclick="register()">Register</button>
+                <% if (authType === 'student') { %>
+                    <button onclick="register()">Register</button>
+                <% } %>
                 
             </div>
             <script>
