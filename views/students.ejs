@@ -10,17 +10,18 @@
             <h2>Welcome Admin!</h2>
         <% } %>
       <br>
-      <h3>Your Schedule</h3>
+      <h3>My Scheduled Classes</h3>
   
       <!-- Display schedule here -->
-    <% if(scheduled_courses) { %> <!-- if statement prevents error if no courses exist -->
-        <% scheduled_courses.forEach(course => { %>
+    <% if(student_courses) { %> <!-- if statement prevents error if no courses exist -->
+        <% student_courses.forEach(course => { %>
             <div>
                 <%= course.courseID %><strong> <%= course.name %></strong><br>
                 <%= course.description %><br>
                 Subject: <%= course.subject %><br>
                 Credits: <%= course.credits %><br>
                 Created by: <%= course.createdby %><br>
+                <button onclick="removeFromSchedule('<%= course.courseID %>')">Remove from Schedule</button>
             </div>
             <hr>
         <% }); %>
@@ -28,6 +29,29 @@
   </div>
 
 </div>
+<script>
+    async function removeFromSchedule(courseID) {
+        try {
+            const response = await fetch('/students/deleteCourse', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ courseID }),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                location.reload();
+            } else {
+                console.error('Deleting failed ', data.err);
+            }
+
+        } catch (err) {
+            console.error('Deleting the scheduled class failed: ', err);
+        }
+    }
+</script>
 <%- include('./partials/footer.ejs') %>
 </body>
 </html>

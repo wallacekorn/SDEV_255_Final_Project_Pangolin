@@ -51,7 +51,7 @@
                 passwordErrorDiv.textContent = data.errors.password;
             }
             if (data.student || data.instructor || data.admin) {
-                location.assign('/');
+                window.location.href = '/';
             }
         }
         catch (err) {

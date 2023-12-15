@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 const loginCheck = (req, res, next) => {
     if (req.cookies.jwt) {
         const token = req.cookies.jwt;
-        // verifies the token is valid
-        jwt.verify(token, 'super secret code', (err, decodedToken) => {
+        
+        jwt.verify(token, 'super secret code', (err, decodedToken) => { // verifies the token is valid
             if (err) {
                 console.log(err);
             } else {
@@ -61,25 +61,25 @@ const authCheckInstructor = (req, res, next) => {
 };
 
 const authCheckStudent = (req, res, next) => {
-        const token = req.cookies.jwt;
-        // verifies the token is valid
-        if (token) {
-            jwt.verify(token, 'super secret code', (err, decodedToken) => {
-            if (err || (decodedToken.authType !== 'admin' && decodedToken.authType !== 'instructor' && decodedToken.authType !== 'student')) {
-                res.redirect('/login');
-            } else {
-                if (res.locals.authType !== 'admin' && res.locals.authType !== 'instructor') {
-                    res.locals.authType = 'student';}
-                res.locals.email = decodedToken.email;
-                res.locals.firstName = decodedToken.firstName;
-                res.locals.lastName = decodedToken.lastName;
-                res.locals.scheduled_courses = decodedToken.courses;
-                next();
-            }
-            });
-        } else {
+    const token = req.cookies.jwt;
+    
+    if (token) { // verifies the token is valid
+        jwt.verify(token, 'super secret code', (err, decodedToken) => {
+        if (err || (decodedToken.authType !== 'admin' && decodedToken.authType !== 'instructor' && decodedToken.authType !== 'student')) {
             res.redirect('/login');
+        } else {
+            if (res.locals.authType !== 'admin' && res.locals.authType !== 'instructor') {
+                res.locals.authType = 'student';}
+            res.locals.email = decodedToken.email;
+            res.locals.firstName = decodedToken.firstName;
+            res.locals.lastName = decodedToken.lastName;
+            res.locals.student_courses = decodedToken.student_courses;
+            next();
         }
+        });
+    } else {
+        res.redirect('/login');
+    }
 };
 
-module.exports = { authCheckAdmin, authCheckInstructor, authCheckStudent, loginCheck };
+module.exports = { authCheckAdmin, authCheckInstructor, authCheckStudent, loginCheck};

@@ -14,11 +14,11 @@ const studentSchema = new Schema({
         required: false,
     },
     courses: {
-        type: Array
+        type: Array,
     },
     enrollment: {
         type: Boolean,
-        default: false
+        default: true
     },
     email: {
         type: String,

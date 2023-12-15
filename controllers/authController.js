@@ -34,9 +34,9 @@ const handleErrors = (err) => {
     return errors;
 }
 
-const createToken = (id, authType, email, firstName, lastName, courses) => {
-    return jwt.sign({ id, authType, email, firstName, lastName, courses}, 'super secret code', {
-        expiresIn: 172800 //seconds
+const createToken = (id, authType, email, firstName, lastName, student_courses) => {
+    return jwt.sign({ id, authType, email, firstName, lastName, student_courses}, 'super secret code', {
+        expiresIn: 172800 // 2 days in seconds
     });
 }
 
@@ -72,8 +72,9 @@ module.exports.login_post = async (req, res) => {
         if (student) {
             const firstName = student.firstName;
             const lastName = student.lastName;
-            const courses = student.courses;
-            const token = createToken(student._id, 'student', email, firstName, lastName, courses );
+            const student_courses = student.courses;
+
+            const token = createToken(student._id, 'student', email, firstName, lastName, student_courses );
             res.cookie('jwt', token, { httpOnly: true, maxAge: 178000 });
             res.status(200).json({ student: student._id, authType: 'student', email});
         }

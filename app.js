@@ -9,8 +9,6 @@ const instructorRoutes = require('./routes/instructorRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 
-const Instructor = require('./models/instructor');
-const Student = require('./models/student');
 const Course = require('./models/course');
 const Admin = require('./models/admin');
 
@@ -21,7 +19,6 @@ const authMW = require('./middleware/authMiddleware');
 const loginCheck = authMW.loginCheck;
 const authCheckAdmin = authMW.authCheckAdmin;
 const authCheckInstructor = authMW.authCheckInstructor;
-const authCheckStudent = authMW.authCheckStudent;
 
 const app = express();
 // mongodb+srv://PangolinPal:Pangolin_Pal_1@cluster0.i4h9m9n.mongodb.net/pangolin_data?retryWrites=true&w=majority
@@ -46,19 +43,15 @@ app.get('/', loginCheck, (req, res) => {
 });
 
 app.get('/courses',loginCheck, async (req, res) => {
-  try {
-      const courses = await Course.find();
-      res.render('allCourses', { title: 'Courses', courses });
+  try {        
+        const student_courses = res.locals.student_courses;
+        const courses = await Course.find();
+        res.render('allCourses', { title: 'Courses', courses, student_courses });
   } catch (err) {
-      console.error(err);
-      res.status(404).send('Unable to retrieve courses');
+        console.error(err);
+        res.status(404).send('Unable to retrieve courses');
   }
 });
-
-app.get('/singleCourse', (req, res) => {
-    res.render('singleCourse', { title: 'Courses'});
-});
-
 
 app.get('/adminCreation', (req, res) => {
     res.render('adminCreation', { title: 'Admin Creation' });

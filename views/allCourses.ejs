@@ -1,4 +1,4 @@
-<html lang="en">
+<!DOCTYPE html>
 <%- include('./partials/head.ejs') %>
 <body>
     <%- include('./partials/nav.ejs') %> 
@@ -29,9 +29,10 @@
                 <button onclick="register()">Register</button>
                 
             </div>
-
             <script>
+                let currentCourseID;
                 function expandView(courseID, name, description, subject, credits, createdby) {
+                    currentCourseID = courseID;
                     document.getElementById('courseTitle').innerText = `${courseID}`;
                     document.getElementById('courseDetails').innerHTML = `
                         <p class="name"><span class="boldType">Course Name: </span>${name}</p>
@@ -45,8 +46,24 @@
                 function exitView() {
                     document.getElementById('courseView').style.display = 'none';
                 }
-              function register() {
-              }
+                async function register() {
+                    try {
+                        const response = await fetch('/students/registerCourse', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ courseID: currentCourseID }),
+                        });
+
+                        const data = await response.json();
+                        if (data.success){
+                            window.location.href = '/students';
+                        }
+                    } catch (err) {
+                        console.error('Registration failed: ', err);
+                    }
+                }
               
           </script>
   <%- include('./partials/footer.ejs') %>
