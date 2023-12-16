@@ -20,7 +20,9 @@ Students can add and remove course from their schedule.
 
 ## Contributors
 All members of the Pangolin group were involved in the production of this application.
+Pangolin image sourced under free license from pixabay.com
 
 ## License
  This project is licensed under the terms of the MIT license
+
 
