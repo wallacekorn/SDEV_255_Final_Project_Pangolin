@@ -115,10 +115,11 @@ router.post('/add-instructor', async (req, res) => {
         });
 
         // Save the new instructor to the database
-        await newInstructor.save();
-
-        // Redirect to the admin page after successful addition
-        res.redirect('/admin');
+        await newInstructor.save()
+            .then(() => {
+                // Redirect to the admin page after successful addition
+                res.redirect('/admin');
+            });
     } catch (err) {
         console.error(err);
         res.status(404).send('Instructor not added');
