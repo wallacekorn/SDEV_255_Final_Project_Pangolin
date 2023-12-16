@@ -30,6 +30,7 @@ router.get('/', loginCheck, authCheckInstructor, async (req, res) => {
 router.get('/edit/:title', loginCheck, authCheckInstructor, async (req, res) => {
     const courseTitle = req.params.title;
     try {
+        res.locals.instructor = req.params.createdby;
         // Find the course to be edited by its title
         const course = await Course.findOne({ name: courseTitle });
 
@@ -102,7 +103,7 @@ router.post('/delete/:name', async (req, res) => {
 
 // Display the page to add a new course
 router.get('/add-course', loginCheck, authCheckInstructor, (req, res) => {
-    res.render('addCourse', { title: 'Add Course' });
+    res.render('addCourse', { title: 'Add Course' , createdby: res.locals.email });
 });
 
 // Handle the submission of the new course form
