@@ -17,9 +17,9 @@
             Created By: <%= course.createdby %>
         </div>
     
-        <form action="/instructor/delete/<%= course.name %>" method="POST">
+        <form action="/instructor/delete/<%= course.name %>" method="POST" class="add-edit-delete-forms">
             <p>Are you sure you want to delete this course?</p>
-            <button type="submit">Yes, Delete Course</button>
+            <button type="submit">Yes, Delete Course</button> <button onclick="window.history.back()">Cancel</button>
     </div>
     <%- include('./partials/footer.ejs') %>
 </body>

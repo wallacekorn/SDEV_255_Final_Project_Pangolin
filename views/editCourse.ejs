@@ -9,7 +9,7 @@
         <h2>Edit Course</h2>
 
         <!-- Form for editing the course -->
-        <form action="/instructor/edit/<%= course.name %>" method="POST">
+        <form action="/instructor/edit/<%= course.name %>" method="POST" class="add-edit-delete-forms">
             <label for="courseID">Course Number:</label>
             <input type="text" id="courseID" name="courseID" value="<%= course.courseID %>" required>
         
@@ -28,7 +28,7 @@
             <label for="createdby">Created By:</label>
             <input type="text" id="createdby" name="createdby" value="<%= course.createdby %>" required>
         
-            <button type="submit">Update Course</button>
+            <button type="submit">Update Course</button> <button onclick="window.history.back()">Cancel</button>
         </form>
     </div>
     <%- include('./partials/footer.ejs') %>

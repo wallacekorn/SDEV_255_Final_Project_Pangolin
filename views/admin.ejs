@@ -11,7 +11,7 @@
       
     <!-- Display instructors for editing here -->
           <% instructors.forEach(instructor => { %>
-              <div>
+              <div class="crud-forms">
                   Name: <strong> <%= instructor.firstName %>
                   <%= instructor.lastName %></strong><br>
                   Email: <%= instructor.email %><br>
@@ -26,11 +26,12 @@
           <a href="/admin/add-instructor">Add Instructor</a>
       </div>
       <br><br>
-      <h3>Edit Courses</h3>
+      <h3>Edit Courses <span style="font-weight:normal;font-size: 14px;"> (add, on instructor page)</span></h3> 
       <!-- Display all courses for editing here -->
       <% courses.forEach(course => { %>
-          <div>
-              <%= course.courseID %><strong> <%= course.name %></strong><br>
+          <div class="crud-forms">
+              ID: <%= course.courseID %><br>
+              Name: <strong> <%= course.name %></strong><br>
               <%= course.description %><br>
               Subject: <%= course.subject %><br>
               Credits: <%= course.credits %><br>

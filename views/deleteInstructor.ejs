@@ -15,9 +15,9 @@
             Last Name: <%= instructor.lastName %><br>
         </div>
     
-        <form action="/admin/delete/<%= instructor.email %>" method="POST">
+        <form action="/admin/delete/<%= instructor.email %>" method="POST" class="add-edit-delete-forms">
             <p>Are you sure you want to delete this instructor?</p>
-            <button type="submit">Yes, Delete Instructor</button>
+            <button type="submit">Yes, Delete Instructor</button> <button onclick="window.history.back()">Cancel</button>
     </div>
     
     <%- include('./partials/footer.ejs') %>

@@ -5,19 +5,16 @@
 <body>
     <%- include('./partials/nav.ejs') %> 
 
-    <div class="edit-instructor-body-div">
+    <div class="edit-instructor-body-div" >
         <h2>Edit Instructor</h2>
 
         <!-- Form for editing the instructor -->
-        <form action="/admin/edit/<%= instructor.email %>" method="POST">
+        <form action="/admin/edit/<%= instructor.email %>" method="POST" class="add-edit-delete-forms">
             <label for="firstName">First Name:</label>
             <input type="text" id="firstName" name="firstName" value="<%= instructor.firstName %>" required>
             
             <label for="lastName">Last Name:</label>
             <input type="text" id="lastName" name="lastName" value="<%= instructor.lastName %>" required>
-            
-            <label for="courses">Courses:</label>
-            <input type="text" id="courses" name="courses" value="<%= instructor.courses.join(', ') %>">
             
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" value="<%= instructor.email %>" required>
@@ -25,7 +22,7 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required >
             
-            <button type="submit">Update Instructor</button>
+            <button type="submit">Update Instructor</button> <button onclick="window.history.back()">Cancel</button>
         </form>
     </div>
     <%- include('./partials/footer.ejs') %>

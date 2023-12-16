@@ -101,6 +101,7 @@ form {
 }
 
 .courses button,
+.add-edit-delete-forms button,
 .form button,
 .create-course button {
     margin-top: 5px;
@@ -110,4 +111,27 @@ form {
     border-radius: 3px;
     font-size: 16px;
     color: #a3250f;
+}
+
+#adminCreationLink {
+    text-decoration: underline;
+    color: rgb(0, 119, 255);
+}
+
+.course-Actions a{
+    font-weight:bold;
+    background-color: #d1cccb;
+    border-radius: 5px;
+}
+
+.crud-forms {
+    border-radius: 5px;
+    margin-right: 50%;
+    margin-left: 3%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #fbe5e3;
+    border: 1px inset black;
 }
