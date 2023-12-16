@@ -14,7 +14,8 @@ const studentSchema = new mongoose.Schema({
         required: [true, 'Please enter your last name'],
     },
     courses: {
-        type: Array
+        type: Array,
+        default: []
     },
     email: {
         type: String,
